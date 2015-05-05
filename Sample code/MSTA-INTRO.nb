@@ -1,0 +1,1395 @@
+(************** Content-type: application/mathematica **************
+                     CreatedBy='Mathematica 5.0'
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used with any Mathematica-compatible
+application, such as Mathematica, MathReader or Publicon. The data
+for the notebook starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do
+one of the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the
+  application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing
+the word CacheID, otherwise Mathematica-compatible applications may
+try to use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+*******************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[     23161,        955]*)
+(*NotebookOutlinePosition[     23840,        978]*)
+(*  CellTagsIndexPosition[     23796,        974]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+Cell["MSTA2", "Title"],
+
+Cell["A short introduction by S. Furuta", "Subtitle"],
+
+Cell["November 2004, Cambridge University.", "Subsubtitle"],
+
+Cell[TextData[{
+  "MSTA is a ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " package for constructing spacetime algebras (STA) and multiparticle \
+spacetime algebras (MSTA), and for performing geometric algebra (GA) \
+operations. I will assume a very basic knowledge of ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " at  beginner level (knowledge of Part 1 of the ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " ",
+  StyleBox["Book ",
+    FontSlant->"Italic"],
+  "is sufficient)",
+  ". More importantly, I will assume a basic knowledge of GA and, in \
+particular, the MSTA. If required, consult the book \"Geometric Algebra for \
+Physicists\" by Doran and Lasenby (CUP) for reference, or visit the Cambridge \
+GA website at ",
+  ButtonBox["http://www.mrao.cam.ac.uk/~clifford",
+    ButtonData:>{
+      URL[ "http://www.mrao.cam.ac.uk/~clifford"], None},
+    ButtonStyle->"Hyperlink"]
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell["Loading the package", "Section"],
+
+Cell["\<\
+First I am going to change the current directory to the location of my \
+package file MSTA1.m (Enter the path appropriate to your file system)\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(SetDirectory["\<C:/Documents and Settings/SF/My Documents/MSTA \
+Mathematica Package/source\>"]\)], "Input"],
+
+Cell[BoxData[
+    \("C:\\Documents and Settings\\SF\\My Documents\\MSTA Mathematica Package\
+\\source"\)], "Output"]
+}, Open  ]],
+
+Cell["Then we load the package,", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(<< MSTA1.m\)], "Input"],
+
+Cell[BoxData[
+    \(" MSTA1:\n\tCreated by S. Furuta.\n\tA package for manipulating \
+multiparticle spacetime algebras.\n\t{+,-,-,-} metric set by default. "\)], \
+"Print"],
+
+Cell[BoxData[
+    InterpretationBox[\("setMSTA:\n\t"\[InvisibleSpace]1\[InvisibleSpace]" \
+particle\n\t"\[InvisibleSpace]1\[InvisibleSpace]" space dimension"\),
+      SequenceForm[ 
+      "setMSTA:\n\t", 1, " particle\n\t", 1, " space dimension"],
+      Editable->False]], "Print"]
+}, Open  ]],
+
+Cell["\<\
+{+,-,-,-} metric is the Minkowski metric, with the timelike vector squaring \
+to +1. The metric is cutomizable, as explained later.\
+\>", "Commentary"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Getting information", "Section"],
+
+Cell[TextData[{
+  "All symbols defined in this package have the usual ",
+  StyleBox["Mathematica \"",
+    FontSlant->"Italic"],
+  "usage\" messages. For example,"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?\[Gamma]\)\)], "Input"],
+
+Cell[BoxData[
+    \("\[Gamma] is the wrapper symbol for blade indices."\)], "Print"]
+}, Open  ]],
+
+Cell["\<\
+A list of all symbols defined in this package can be displayed,\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Names["\<MSTA1`*\>"]\)], "Input"],
+
+Cell[BoxData[
+    \({"comprod", "dotprod", "gather", "listblades", "listcoeff", 
+      "listgrades", "monobladeQ", "order", "project", "red", "rev", 
+      "setMetric", "setMSTA", "shiftind", "wedgeprod", "whatMSTA", 
+      "\[Gamma]"}\)], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Entering blades", "Section"],
+
+Cell[TextData[{
+  "The one-particle STA consists of basis vectors ",
+  Cell[BoxData[
+      \(TraditionalForm\`\(\(\[Gamma]\_\[Mu]\)\(\ \)\)\)]],
+  Cell[BoxData[
+      \(TraditionalForm\`which\ mutually\ anticommute . \ Blades, \ 
+      such\ as\ \(\[Gamma]\_0\) \[Gamma]\_1\ , 
+      are\ specified\ using\ a\ sequence\ of\ \(indices : \ \(\(\[Gamma][0, 
+              1]\)\(.\)\)\)\)]]
+}], "Text"],
+
+Cell["\<\
+Blades are entered as a list of blade indices with the symbol \"\[Gamma]\" as \
+its head.The \"\[Gamma]\" symbol is most easily inputed using the alias \
+\[EscapeKey]g\[EscapeKey].\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\[Gamma][0, 1]\)], "Input"],
+
+Cell[BoxData[
+    \(\[Gamma][0, 1]\)], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Symbolic or numeric coefficients can be juxtaposed along with blades,\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(2\ a\ \[Gamma][0]\ b\)], "Input"],
+
+Cell[BoxData[
+    \(2\ a\ b\ \[Gamma][0]\)], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Since only objects with \[Gamma] as head are assumed to be blades, other \
+symbols are made to automatically commute to the left of blades.\
+\>", "Commentary"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Geometric product", "Section"],
+
+Cell["The geometric product is entered by simple juxtaposition,", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\[Gamma][0] \[Gamma][1]\)], "Input"],
+
+Cell[BoxData[
+    \(\[Gamma][0, 1]\)], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(2\ a\ \[Gamma][0]\ b\ \[Gamma][1]\)], "Input"],
+
+Cell[BoxData[
+    \(2\ a\ b\ \[Gamma][0, 1]\)], "Output"]
+}, Open  ]],
+
+Cell["Notice how easily MSTA deals with the non-blade symbols.", "Commentary"],
+
+Cell["\<\
+All symbols without the \[Gamma] head commute with everything:\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(b\ a\)], "Input"],
+
+Cell[BoxData[
+    \(a\ b\)], "Output"]
+}, Closed]],
+
+Cell["Of course, blade objects do not necessarily commute:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\[Gamma][0] \[Gamma][1] === \[Gamma][1] \[Gamma][0]\)], "Input"],
+
+Cell[BoxData[
+    \(False\)], "Output"]
+}, Closed]],
+
+Cell["Linear combinations of blades are handled naturally:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(a\ b\ \[Gamma][0, 1]\ c\  + \ d\ \[Gamma][1]\/2 + e\)], "Input"],
+
+Cell[BoxData[
+    \(e + 1\/2\ d\ \[Gamma][1] + a\ b\ c\ \[Gamma][0, 1]\)], "Output"]
+}, Closed]],
+
+Cell["If we try to move out of the algebra we constructed, ", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\[Gamma][0] \[Gamma][1] \[Gamma][2]\)], "Input"],
+
+Cell[BoxData[
+    \(MSTA1`Private`reduce::"index" \(\(:\)\(\ \)\) 
+      "Error: index is out of range. Maximum allowed is \!\(1\)."\)], \
+"Message"],
+
+Cell[BoxData[
+    \($Aborted\)], "Output"]
+}, Closed]],
+
+Cell["we are warned and the computation is aborted.", "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Constructing the multipartcle spacetime algebra", "Section"],
+
+Cell[TextData[{
+  "The default algebra is the spacetime algebra for 1 particle in 1 space \
+dimension, consisting of the basis vectors ",
+  Cell[BoxData[
+      \(TraditionalForm\`{\[Gamma]\_0, \ \[Gamma]\_1}\)]],
+  ". By convention ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Gamma]\_0\)]],
+  " is the timelike vector, which squares to unity, and ",
+  Cell[BoxData[
+      \(TraditionalForm\`\(\[Gamma]\_1\) is\ the\ spacelike\ vector, \ 
+      squaring\ to\ minus\ \(\(unity\)\(.\)\(\ \)\)\)]],
+  "When there is more than one particle, the timelike vector corresponding to \
+particle n=1,2,3... is ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Gamma]\_\(\((n - 1)\) \((d + 1)\)\)\)]],
+  ". "
+}], "Text"],
+
+Cell["\<\
+Using the setMSTA[n, d] function, one can construct an arbitrarily large \
+multiparticle spacetime algebra of n particles and d spatial dimensions.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?setMSTA\)\)], "Input"],
+
+Cell[BoxData[
+    \("setMSTA[n_Integer, d_Integer] sets the number of particles to n and \
+the number of spatial dimensions to d."\)], "Print"]
+}, Closed]],
+
+Cell["To construct a 2-particle spacetime algebra in 3-space, ", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(setMSTA[2, 3]\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox[\("setMSTA:\n\t"\[InvisibleSpace]2\[InvisibleSpace]" \
+particle\n\t"\[InvisibleSpace]3\[InvisibleSpace]" space dimension"\),
+      SequenceForm[ 
+      "setMSTA:\n\t", 2, " particle\n\t", 3, " space dimension"],
+      Editable->False]], "Print"]
+}, Closed]],
+
+Cell["\<\
+One can also construct algebras with arbitrary diagonal metric tensors. For \
+example, the geometric algebra of 3-space with signature {1,1,1} may be \
+constructed, using the function setMetric:\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(setMetric[{0, 1, 1, 1}]\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox[\("setMetric:\n\t metric set to "\[InvisibleSpace]{0, 
+          1, 1, 1}\),
+      SequenceForm[ "setMetric:\n\t metric set to ", {0, 1, 1, 1}],
+      Editable->False]], "Print"]
+}, Closed]],
+
+Cell[TextData[{
+  "The 0 is to null the ",
+  Cell[BoxData[
+      \(TraditionalForm\`\[Gamma]\_0\ \(\(vector\)\(.\)\)\)]]
+}], "Commentary"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \({\[Gamma][1]\^2, \[Gamma][2]\^2, \[Gamma][3]\^2}\)], "Input"],
+
+Cell[BoxData[
+    \({1, 1, 1}\)], "Output"]
+}, Closed]],
+
+Cell["Returning to the default metric,", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(setMSTA[1, 1]\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox[\("setMSTA:\n\t"\[InvisibleSpace]1\[InvisibleSpace]" \
+particle\n\t"\[InvisibleSpace]1\[InvisibleSpace]" space dimension"\),
+      SequenceForm[ 
+      "setMSTA:\n\t", 1, " particle\n\t", 1, " space dimension"],
+      Editable->False]], "Print"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["How to use the other MSTA functions", "Section"],
+
+Cell["\<\
+I have invented some simple examples which demonstrate the functionality of \
+the commands bundled with this MSTA package. The commands are presented in \
+alphabetical order below.\
+\>", "Text"],
+
+Cell["Commutator product", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?comprod\)\)], "Input"],
+
+Cell[BoxData[
+    \("comprod[x_, y_] computes the commutator product of x and y (with a \
+factor of 1/2)."\)], "Print"]
+}, Closed]],
+
+Cell["Inner product", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?dotprod\)\)], "Input"],
+
+Cell[BoxData[
+    \("dotprod[x_, y_] takes any two expressions x and y, which can be linear \
+combinations of blades, and returns the geometric dot product x\[CenterDot]y. \
+The infix operator [ESC].[ESC] is an alias."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(dotprod[a\ \[Gamma][0], 1 + b\ \[Gamma][0, 1]]\)], "Input"],
+
+Cell[BoxData[
+    \(a\ \[Gamma][0] + a\ b\ \[Gamma][1]\)], "Output"]
+}, Closed]],
+
+Cell["\<\
+Alternatively, using the infix operator  \[EscapeKey].\[EscapeKey]\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(a\ \[Gamma][0]\[CenterDot]\((1 + b\ \[Gamma][0, 1])\)\)], "Input"],
+
+Cell[BoxData[
+    \(a\ \((\[Gamma][0] + b\ \[Gamma][1])\)\)], "Output"]
+}, Closed]],
+
+Cell["Gather coefficients of blades", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?gather\)\)], "Input"],
+
+Cell[BoxData[
+    \("gather[x_] takes any expression x and groups together the coefficients \
+of distinct blades."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(a + b\ \[Gamma][0] + 
+      c\ \[Gamma][1] + \(\(d\)\(\ \)\(\[Gamma][0]\)\(\ \)\)\)], "Input"],
+
+Cell[BoxData[
+    \(a + b\ \[Gamma][0] + d\ \[Gamma][0] + c\ \[Gamma][1]\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(% // gather\)], "Input"],
+
+Cell[BoxData[
+    \(a + \((b + d)\)\ \[Gamma][0] + c\ \[Gamma][1]\)], "Output"]
+}, Closed]],
+
+Cell["List the blades contained in an expression", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?listblades\)\)], "Input"],
+
+Cell[BoxData[
+    \("listblades[x_] lists the spectrum of blades present in x."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(a + b\ \[Gamma][0] + c\ \[Gamma][0, 1] // listblades\)], "Input"],
+
+Cell[BoxData[
+    \({1, \[Gamma][0], \[Gamma][0, 1]}\)], "Output"]
+}, Closed]],
+
+Cell["List the coefficients of blades and the blades themselves", \
+"Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?listcoeff\)\)], "Input"],
+
+Cell[BoxData[
+    \("listcoeff[x_] returns the scalar part and blade coefficients in \
+canonical order, together with the corresponding list of blades."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(a + b\ \[Gamma][0] + c\ \[Gamma][0, 1] // listcoeff\)], "Input"],
+
+Cell[BoxData[
+    \({{a, b, c}, {1, \[Gamma][0], \[Gamma][0, 1]}}\)], "Output"]
+}, Closed]],
+
+Cell["List the grades of blades present in an expression", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?listgrades\)\)], "Input"],
+
+Cell[BoxData[
+    \("listgrades[x_] lists the spectrum of grades present in the expression \
+x."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(a + b\ \[Gamma][0] + c\ \[Gamma][0, 1]\  // listgrades\)], "Input"],
+
+Cell[BoxData[
+    \({0, 1, 2}\)], "Output"]
+}, Closed]],
+
+Cell["\<\
+Test whether the expression is a sum of terms each containing only one \
+blade\
+\>", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?monobladeQ\)\)], "Input"],
+
+Cell[BoxData[
+    \("monobladeQ[x_] returns True if x is a sum of terms each containing \
+only one blade."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(monobladeQ[a\ \[Gamma][0, 1]]\)], "Input"],
+
+Cell[BoxData[
+    \(True\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(monobladeQ[\[Gamma][0] \((a + \ b\ \[Gamma][1])\)]\)], "Input"],
+
+Cell[BoxData[
+    \(False\)], "Output"]
+}, Closed]],
+
+Cell["Transform blades indices into increasing order", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?order\)\)], "Input"],
+
+Cell[BoxData[
+    \("order[x_] transforms blades by anticommuting indices until they are in \
+increasing order."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(a\ \[Gamma][0, 1]\  + \ b\ \[Gamma][1, 0] // order\)], "Input"],
+
+Cell[BoxData[
+    \(a\ \[Gamma][0, 1] - b\ \[Gamma][0, 1]\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(% // gather\)], "Input"],
+
+Cell[BoxData[
+    \(\((a - b)\)\ \[Gamma][0, 1]\)], "Output"]
+}, Closed]],
+
+Cell["Project out a particular grade from an expression", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?project\)\)], "Input"],
+
+Cell[BoxData[
+    \("project[x_, n_Integer] projects out the n-grade part of the expression \
+x."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(project[a + b\ \[Gamma][0] + c\ \[Gamma][0, 1], 1]\)], "Input"],
+
+Cell[BoxData[
+    \(b\ \[Gamma][0]\)], "Output"]
+}, Closed]],
+
+Cell["Reduce duplicate indices in blades", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?red\)\)], "Input"],
+
+Cell[BoxData[
+    \("red[x_] cancels out duplicate blade indices of an expression x."\)], \
+"Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(a\  + b\ \[Gamma][0, 1, 1] // red\)], "Input"],
+
+Cell[BoxData[
+    \(a - b\ \[Gamma][0]\)], "Output"]
+}, Closed]],
+
+Cell["Reverse the blade indices", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?rev\)\)], "Input"],
+
+Cell[BoxData[
+    \("rev[x_] takes an expression x and reverses the order of blade \
+indices."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\[Gamma][0, 1] // rev\)], "Input"],
+
+Cell[BoxData[
+    \(\[Gamma][1, 0]\)], "Output"]
+}, Closed]],
+
+Cell["Construct a multiparticle spacetime algebra", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?setMSTA\)\)], "Input"],
+
+Cell[BoxData[
+    \("setMSTA[n_Integer, d_Integer] sets the number of particles to n and \
+the number of spatial dimensions to d."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\[Gamma][0] \[Gamma][2]\)], "Input"],
+
+Cell[BoxData[
+    \(MSTA1`Private`reduce::"index" \(\(:\)\(\ \)\) 
+      "Error: index is out of range. Maximum allowed is \!\(1\)."\)], \
+"Message"],
+
+Cell[BoxData[
+    \($Aborted\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(setMSTA[2, 3]\)], "Input"],
+
+Cell[BoxData[
+    InterpretationBox[\("setMSTA:\n\t"\[InvisibleSpace]2\[InvisibleSpace]" \
+particle\n\t"\[InvisibleSpace]3\[InvisibleSpace]" space dimension"\),
+      SequenceForm[ 
+      "setMSTA:\n\t", 2, " particle\n\t", 3, " space dimension"],
+      Editable->False]], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\[Gamma][0] \[Gamma][2]\)], "Input"],
+
+Cell[BoxData[
+    \(\[Gamma][0, 2]\)], "Output"]
+}, Closed]],
+
+Cell["Shift blade indices by an integer number", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?shiftind\)\)], "Input"],
+
+Cell[BoxData[
+    \("shiftind[x_, n_Integer] shifts all indices of every blade occuring in \
+x by adding an integer n."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(shiftind[a\ \[Gamma][2, 3] + \ b, 3]\)], "Input"],
+
+Cell[BoxData[
+    \(b + a\ \[Gamma][5, 6]\)], "Output"]
+}, Closed]],
+
+Cell["Outer product", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?wedgeprod\)\)], "Input"],
+
+Cell[BoxData[
+    \("wedgeprod[x_, y_] takes any two expressions x and y, which can be \
+linear combinations of blades, and returns the geometric wedge product x\
+\[Wedge]y. The infix operator [ESC]^[ESC] is an alias."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(wedgeprod[\((a + b\ \[Gamma][0])\), \((c + 
+          d\ \[Gamma][0, 1])\)]\)], "Input"],
+
+Cell[BoxData[
+    \(a\ c + b\ c\ \[Gamma][0] + a\ d\ \[Gamma][0, 1]\)], "Output"]
+}, Closed]],
+
+Cell["\<\
+Alternatively, using the infix operator, \[EscapeKey]^\[EscapeKey]\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\((a + b\ \[Gamma][0])\)\[Wedge]\((c + d\ \[Gamma][0, 1])\)\)], "Input"],
+
+Cell[BoxData[
+    \(a\ c + b\ c\ \[Gamma][0] + a\ d\ \[Gamma][0, 1]\)], "Output"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+  "Some standard ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  StyleBox[" ",
+    FontSlant->"Plain"],
+  "functions have been overloaded"
+}], "Section"],
+
+Cell[TextData[{
+  "Several standard ",
+  StyleBox["Mathematica",
+    FontSlant->"Italic"],
+  " function have been overloaded to cope with GA expressions:"
+}], "Text"],
+
+Cell["Times", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?Times\)\)], "Input"],
+
+Cell[BoxData[
+    \("\"x*y*z\" or \"x y z\" represents a product of terms.\n Times[x__] has \
+been overloaded such that products between blades \[Gamma][__] are correctly \
+executed."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Times[\[Gamma][0], \[Gamma][1]]\)], "Input"],
+
+Cell[BoxData[
+    \(\[Gamma][0, 1]\)], "Output"]
+}, Closed]],
+
+Cell["Power", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?Power\)\)], "Input"],
+
+Cell[BoxData[
+    \("\"x^y\" gives x to the power y.\nPower has been overloaded to deal \
+with GA expressions correctly."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Power[a\ \[Gamma][0] + b\ \[Gamma][1], 2]\)], "Input"],
+
+Cell[BoxData[
+    \(a\^2 - b\^2\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\((a\ \[Gamma][0] + b\ \[Gamma][1])\)\^2\)], "Input"],
+
+Cell[BoxData[
+    \(a\^2 - b\^2\)], "Output"]
+}, Closed]],
+
+Cell["Exp", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?Exp\)\)], "Input"],
+
+Cell[BoxData[
+    \("Exp[x_] is the exponential function.\n Exp[x_] has been overloaded so \
+that exponentials of monoblades \"a \[Gamma][__]\" can be computed."\)], \
+"Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Exp[\[Lambda]\ \[Gamma][1]]\)], "Input"],
+
+Cell[BoxData[
+    \(Cos[\[Lambda]] + Sin[\[Lambda]]\ \[Gamma][1]\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Exp[\ \[Lambda]\ \[Gamma][0, 1]]\)], "Input"],
+
+Cell[BoxData[
+    \(Cosh[\[Lambda]] + Sinh[\[Lambda]]\ \[Gamma][0, 1]\)], "Output"]
+}, Closed]],
+
+Cell["Simplify and FullSimplify", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Simplify[a\^2 + a\ b]\)], "Input"],
+
+Cell[BoxData[
+    \(a\ \((a + b)\)\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(Simplify[a\^2\ \[Gamma][0] + \ a\ b\ \[Gamma][0]]\)], "Input"],
+
+Cell[BoxData[
+    \(Simplify::"blades" \(\(:\)\(\ \)\) 
+      "Simplify and FullSimplify do not operate correctly on expressions \
+containing blades."\)], "Message"],
+
+Cell[BoxData[
+    \($Aborted\)], "Output"]
+}, Closed]],
+
+Cell["Expand", "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\(?Expand\)\)], "Input"],
+
+Cell[BoxData[
+    \("Expand[x_] has been overloaded to expand out expressions involving \
+blade elements.\n     Expand[x_] expands out products and positive integer \
+powers in x. Expand[x_, patt] leaves unexpanded any parts of expr that are \
+free of the pattern patt."\)], "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\((a\ \[Gamma][0] + b\ \[Gamma][0, 1])\) \((c\ \[Gamma][1]\  + \ 
+          d\ \[Gamma][0, 1])\)\)], "Input"],
+
+Cell[BoxData[
+    \(\((a\ \[Gamma][0] + b\ \[Gamma][0, 1])\)\ \((c\ \[Gamma][1] + 
+          d\ \[Gamma][0, 1])\)\)], "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+    \(\((a\ \[Gamma][0] + b\ \[Gamma][0, 1])\) \((c\ \[Gamma][1]\  + \ 
+            d\ \[Gamma][0, 1])\) // Expand\)], "Input"],
+
+Cell[BoxData[
+    \(b\ d - b\ c\ \[Gamma][0] + a\ d\ \[Gamma][1] + 
+      a\ c\ \[Gamma][0, 1]\)], "Output"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["", "Section"],
+
+Cell[TextData[StyleBox["Please send me bug reports and suggestions for \
+improving the MSTA package and this help document. \nYour comments will be \
+greatly appreciated.\nEmail: sf277@cam.ac.uk\n\nAcknowledgements:\nThanks to \
+Dr Tim Havel; Dr Alejandro Caceres; Brendan McCane.",
+  FontSize->12]], "Subtitle",
+  TextAlignment->Left]
+}, Open  ]]
+},
+FrontEndVersion->"5.0 for Microsoft Windows",
+ScreenRectangle->{{0, 1024}, {0, 685}},
+WindowSize->{717, 635},
+WindowMargins->{{64, Automatic}, {Automatic, 3}},
+StyleDefinitions -> "DemoText.nb"
+]
+
+(*******************************************************************
+Cached data follows.  If you edit this Notebook file directly, not
+using Mathematica, you must remove the line containing CacheID at
+the top of  the file.  The cache data will then be recreated when
+you save this file from within Mathematica.
+*******************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+Cell[1754, 51, 22, 0, 70, "Title"],
+Cell[1779, 53, 53, 0, 41, "Subtitle"],
+Cell[1835, 55, 59, 0, 58, "Subsubtitle"],
+Cell[1897, 57, 929, 24, 105, "Text"],
+
+Cell[CellGroupData[{
+Cell[2851, 85, 38, 0, 54, "Section"],
+Cell[2892, 87, 166, 3, 48, "Text"],
+
+Cell[CellGroupData[{
+Cell[3083, 94, 128, 2, 60, "Input"],
+Cell[3214, 98, 116, 2, 49, "Output"]
+}, Open  ]],
+Cell[3345, 103, 41, 0, 29, "Text"],
+
+Cell[CellGroupData[{
+Cell[3411, 107, 43, 1, 40, "Input"],
+Cell[3457, 110, 172, 3, 82, "Print"],
+Cell[3632, 115, 281, 5, 63, "Print"]
+}, Open  ]],
+Cell[3928, 123, 161, 3, 23, "Commentary"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[4126, 131, 38, 0, 34, "Section"],
+Cell[4167, 133, 174, 5, 29, "Text"],
+
+Cell[CellGroupData[{
+Cell[4366, 142, 46, 1, 40, "Input"],
+Cell[4415, 145, 84, 1, 25, "Print"]
+}, Open  ]],
+Cell[4514, 149, 87, 2, 29, "Text"],
+
+Cell[CellGroupData[{
+Cell[4626, 155, 53, 1, 40, "Input"],
+Cell[4682, 158, 249, 4, 68, "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[4980, 168, 34, 0, 34, "Section"],
+Cell[5017, 170, 398, 9, 46, "Text"],
+Cell[5418, 181, 204, 4, 48, "Text"],
+
+Cell[CellGroupData[{
+Cell[5647, 189, 47, 1, 40, "Input"],
+Cell[5697, 192, 48, 1, 49, "Output"]
+}, Open  ]],
+Cell[5760, 196, 93, 2, 29, "Text"],
+
+Cell[CellGroupData[{
+Cell[5878, 202, 53, 1, 40, "Input"],
+Cell[5934, 205, 54, 1, 49, "Output"]
+}, Open  ]],
+Cell[6003, 209, 169, 3, 23, "Commentary"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[6209, 217, 36, 0, 34, "Section"],
+Cell[6248, 219, 73, 0, 29, "Text"],
+
+Cell[CellGroupData[{
+Cell[6346, 223, 56, 1, 40, "Input"],
+Cell[6405, 226, 48, 1, 49, "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+Cell[6490, 232, 66, 1, 40, "Input"],
+Cell[6559, 235, 57, 1, 49, "Output"]
+}, Open  ]],
+Cell[6631, 239, 78, 0, 23, "Commentary"],
+Cell[6712, 241, 86, 2, 29, "Text"],
+
+Cell[CellGroupData[{
+Cell[6823, 247, 37, 1, 40, "Input"],
+Cell[6863, 250, 38, 1, 49, "Output"]
+}, Closed]],
+Cell[6916, 254, 68, 0, 28, "Text"],
+
+Cell[CellGroupData[{
+Cell[7009, 258, 84, 1, 40, "Input"],
+Cell[7096, 261, 39, 1, 49, "Output"]
+}, Closed]],
+Cell[7150, 265, 68, 0, 28, "Text"],
+
+Cell[CellGroupData[{
+Cell[7243, 269, 84, 1, 52, "Input"],
+Cell[7330, 272, 84, 1, 62, "Output"]
+}, Closed]],
+Cell[7429, 276, 69, 0, 28, "Text"],
+
+Cell[CellGroupData[{
+Cell[7523, 280, 68, 1, 40, "Input"],
+Cell[7594, 283, 149, 3, 25, "Message"],
+Cell[7746, 288, 42, 1, 49, "Output"]
+}, Closed]],
+Cell[7803, 292, 61, 0, 28, "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[7901, 297, 66, 0, 34, "Section"],
+Cell[7970, 299, 705, 17, 86, "Text"],
+Cell[8678, 318, 171, 3, 48, "Text"],
+
+Cell[CellGroupData[{
+Cell[8874, 325, 45, 1, 40, "Input"],
+Cell[8922, 328, 143, 2, 44, "Print"]
+}, Closed]],
+Cell[9080, 333, 72, 0, 29, "Text"],
+
+Cell[CellGroupData[{
+Cell[9177, 337, 46, 1, 40, "Input"],
+Cell[9226, 340, 281, 5, 63, "Print"]
+}, Closed]],
+Cell[9522, 348, 218, 4, 48, "Text"],
+
+Cell[CellGroupData[{
+Cell[9765, 356, 56, 1, 40, "Input"],
+Cell[9824, 359, 214, 4, 44, "Print"]
+}, Closed]],
+Cell[10053, 366, 138, 4, 23, "Commentary"],
+
+Cell[CellGroupData[{
+Cell[10216, 374, 81, 1, 41, "Input"],
+Cell[10300, 377, 43, 1, 49, "Output"]
+}, Closed]],
+Cell[10358, 381, 48, 0, 29, "Text"],
+
+Cell[CellGroupData[{
+Cell[10431, 385, 46, 1, 40, "Input"],
+Cell[10480, 388, 281, 5, 63, "Print"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[10810, 399, 54, 0, 34, "Section"],
+Cell[10867, 401, 204, 4, 48, "Text"],
+Cell[11074, 407, 43, 0, 44, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[11142, 411, 45, 1, 40, "Input"],
+Cell[11190, 414, 119, 2, 25, "Print"]
+}, Closed]],
+Cell[11324, 419, 38, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[11387, 423, 45, 1, 40, "Input"],
+Cell[11435, 426, 231, 3, 63, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[11703, 434, 79, 1, 42, "Input"],
+Cell[11785, 437, 68, 1, 49, "Output"]
+}, Closed]],
+Cell[11868, 441, 90, 2, 28, "Text"],
+
+Cell[CellGroupData[{
+Cell[11983, 447, 86, 1, 40, "Input"],
+Cell[12072, 450, 71, 1, 49, "Output"]
+}, Closed]],
+Cell[12158, 454, 54, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[12237, 458, 44, 1, 40, "Input"],
+Cell[12284, 461, 127, 2, 44, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[12448, 468, 114, 2, 42, "Input"],
+Cell[12565, 472, 86, 1, 49, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[12688, 478, 44, 1, 42, "Input"],
+Cell[12735, 481, 79, 1, 49, "Output"]
+}, Closed]],
+Cell[12829, 485, 67, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[12921, 489, 48, 1, 40, "Input"],
+Cell[12972, 492, 92, 1, 25, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[13101, 498, 85, 1, 42, "Input"],
+Cell[13189, 501, 66, 1, 49, "Output"]
+}, Closed]],
+Cell[13270, 505, 84, 1, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[13379, 510, 47, 1, 40, "Input"],
+Cell[13429, 513, 165, 2, 44, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[13631, 520, 84, 1, 42, "Input"],
+Cell[13718, 523, 79, 1, 49, "Output"]
+}, Closed]],
+Cell[13812, 527, 75, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[13912, 531, 48, 1, 40, "Input"],
+Cell[13963, 534, 109, 2, 25, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[14109, 541, 87, 1, 42, "Input"],
+Cell[14199, 544, 43, 1, 49, "Output"]
+}, Closed]],
+Cell[14257, 548, 111, 3, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[14393, 555, 48, 1, 40, "Input"],
+Cell[14444, 558, 119, 2, 25, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[14600, 565, 62, 1, 42, "Input"],
+Cell[14665, 568, 38, 1, 49, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[14740, 574, 83, 1, 42, "Input"],
+Cell[14826, 577, 39, 1, 49, "Output"]
+}, Closed]],
+Cell[14880, 581, 71, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[14976, 585, 43, 1, 40, "Input"],
+Cell[15022, 588, 125, 2, 25, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[15184, 595, 83, 1, 42, "Input"],
+Cell[15270, 598, 71, 1, 49, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[15378, 604, 44, 1, 42, "Input"],
+Cell[15425, 607, 61, 1, 49, "Output"]
+}, Closed]],
+Cell[15501, 611, 74, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[15600, 615, 45, 1, 40, "Input"],
+Cell[15648, 618, 110, 2, 25, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[15795, 625, 83, 1, 42, "Input"],
+Cell[15881, 628, 48, 1, 49, "Output"]
+}, Closed]],
+Cell[15944, 632, 59, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[16028, 636, 41, 1, 40, "Input"],
+Cell[16072, 639, 100, 2, 25, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[16209, 646, 66, 1, 42, "Input"],
+Cell[16278, 649, 52, 1, 49, "Output"]
+}, Closed]],
+Cell[16345, 653, 50, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[16420, 657, 41, 1, 40, "Input"],
+Cell[16464, 660, 107, 2, 25, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[16608, 667, 54, 1, 42, "Input"],
+Cell[16665, 670, 48, 1, 49, "Output"]
+}, Closed]],
+Cell[16728, 674, 68, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[16821, 678, 45, 1, 40, "Input"],
+Cell[16869, 681, 143, 2, 44, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[17049, 688, 56, 1, 42, "Input"],
+Cell[17108, 691, 149, 3, 25, "Message"],
+Cell[17260, 696, 42, 1, 49, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[17339, 702, 46, 1, 42, "Input"],
+Cell[17388, 705, 281, 5, 63, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[17706, 715, 56, 1, 42, "Input"],
+Cell[17765, 718, 48, 1, 49, "Output"]
+}, Closed]],
+Cell[17828, 722, 65, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[17918, 726, 46, 1, 40, "Input"],
+Cell[17967, 729, 132, 2, 44, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[18136, 736, 69, 1, 42, "Input"],
+Cell[18208, 739, 55, 1, 49, "Output"]
+}, Closed]],
+Cell[18278, 743, 38, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[18341, 747, 47, 1, 40, "Input"],
+Cell[18391, 750, 231, 3, 63, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[18659, 758, 108, 2, 42, "Input"],
+Cell[18770, 762, 81, 1, 49, "Output"]
+}, Closed]],
+Cell[18866, 766, 90, 2, 28, "Text"],
+
+Cell[CellGroupData[{
+Cell[18981, 772, 92, 1, 40, "Input"],
+Cell[19076, 775, 81, 1, 49, "Output"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[19206, 782, 178, 7, 34, "Section"],
+Cell[19387, 791, 166, 5, 29, "Text"],
+Cell[19556, 798, 30, 0, 44, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[19611, 802, 43, 1, 40, "Input"],
+Cell[19657, 805, 196, 3, 63, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[19890, 813, 64, 1, 42, "Input"],
+Cell[19957, 816, 48, 1, 49, "Output"]
+}, Closed]],
+Cell[20020, 820, 30, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[20075, 824, 43, 1, 40, "Input"],
+Cell[20121, 827, 134, 2, 44, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[20292, 834, 74, 1, 42, "Input"],
+Cell[20369, 837, 45, 1, 49, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[20451, 843, 73, 1, 42, "Input"],
+Cell[20527, 846, 45, 1, 49, "Output"]
+}, Closed]],
+Cell[20587, 850, 28, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[20640, 854, 41, 1, 40, "Input"],
+Cell[20684, 857, 176, 3, 63, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[20897, 865, 60, 1, 42, "Input"],
+Cell[20960, 868, 78, 1, 49, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[21075, 874, 65, 1, 42, "Input"],
+Cell[21143, 877, 83, 1, 49, "Output"]
+}, Closed]],
+Cell[21241, 881, 50, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[21316, 885, 54, 1, 41, "Input"],
+Cell[21373, 888, 48, 1, 49, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[21458, 894, 82, 1, 43, "Input"],
+Cell[21543, 897, 165, 3, 44, "Message"],
+Cell[21711, 902, 42, 1, 49, "Output"]
+}, Closed]],
+Cell[21768, 906, 31, 0, 28, "Subsubsection"],
+
+Cell[CellGroupData[{
+Cell[21824, 910, 44, 1, 40, "Input"],
+Cell[21871, 913, 283, 4, 63, "Print"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[22191, 922, 129, 2, 42, "Input"],
+Cell[22323, 926, 127, 2, 49, "Output"]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[22487, 933, 141, 2, 42, "Input"],
+Cell[22631, 937, 108, 2, 49, "Output"]
+}, Closed]]
+}, Closed]],
+
+Cell[CellGroupData[{
+Cell[22788, 945, 19, 0, 34, "Section"],
+Cell[22810, 947, 335, 5, 130, "Subtitle"]
+}, Open  ]]
+}
+]
+*)
+
+
+
+(*******************************************************************
+End of Mathematica Notebook file.
+*******************************************************************)
+
