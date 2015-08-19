@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     50288,       1475]
-NotebookOptionsPosition[     47025,       1367]
-NotebookOutlinePosition[     47816,       1393]
-CellTagsIndexPosition[     47650,       1387]
+NotebookDataLength[     94856,       2826]
+NotebookOptionsPosition[     90722,       2689]
+NotebookOutlinePosition[     91516,       2715]
+CellTagsIndexPosition[     91350,       2709]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -23,6 +23,11 @@ Cell[CellGroupData[{
 Cell["Main code", "Section",
  CellChangeTimes->{{3.648811030891263*^9, 3.6488110314052114`*^9}, {
   3.6488993807988915`*^9, 3.648899383703182*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["helper functions", "Subsection",
+ CellChangeTimes->{{3.648909549657118*^9, 3.648909553530505*^9}}],
 
 Cell[BoxData[{
  RowBox[{"ClearAll", "[", "DeclareBasisBlade", "]"}], "\[IndentingNewLine]", 
@@ -67,8 +72,12 @@ Cell[BoxData[{
         RowBox[{"#", " ", "/:", " ", 
          RowBox[{"MakeBoxes", "[", 
           RowBox[{"#", ",", "StandardForm"}], "]"}], ":=", 
-         "symbolBoxExpression"}], ")"}], "&"}], "@", "bladeSym"}]}]}], 
-   "\[IndentingNewLine]", "]"}]}]}], "Input",
+         "symbolBoxExpression"}], ")"}], "&"}], "@", "bladeSym"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Protect", "[", 
+      RowBox[{"Evaluate", "[", "bladeSym", "]"}], "]"}], ";", 
+     "\[IndentingNewLine]", "bladeSym"}]}], "\[IndentingNewLine]", 
+   "]"}]}]}], "Input",
  CellChangeTimes->{{3.6477957883060894`*^9, 3.6477958050557394`*^9}, {
    3.6477962626991763`*^9, 3.6477963227041764`*^9}, {3.6478595566216717`*^9, 
    3.647859559268936*^9}, {3.6478595920162106`*^9, 3.647859652307239*^9}, {
@@ -87,68 +96,167 @@ Cell[BoxData[{
    3.6478689151342926`*^9}, {3.6485791629700394`*^9, 3.6485792555893*^9}, {
    3.6485800585425906`*^9, 3.6485800598255906`*^9}, 3.648580111077591*^9, {
    3.6488991737631903`*^9, 3.648899179451759*^9}, {3.6488995583846483`*^9, 
-   3.648899564370247*^9}}],
+   3.648899564370247*^9}, {3.6489811471254916`*^9, 3.64898115463874*^9}, {
+   3.648981509015922*^9, 3.648981525702591*^9}, {3.64898954600014*^9, 
+   3.648989560320572*^9}, {3.6489921304037247`*^9, 3.648992138543725*^9}}],
 
 Cell[BoxData[{
- RowBox[{"ClearAll", "[", "ClearBasisBlade", "]"}], "\[IndentingNewLine]", 
- RowBox[{"SetAttributes", "[", 
-  RowBox[{"ClearBasisBlade", ",", "HoldAll"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ClearAll", "[", "bladeSignature", "]"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"ClearBasisBlade", "[", "symbolList_List", " ", "]"}], ":=", 
+  RowBox[{"bladeSignature", "[", 
+   RowBox[{"bladeSet_List", ",", " ", "symbolList_List"}], "]"}], ":=", 
   RowBox[{"Module", "[", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"{", "\[IndentingNewLine]", 
-     RowBox[{"bladeSym", "=", 
-      RowBox[{"Symbol", "[", 
-       RowBox[{"StringJoin", "@@", 
-        RowBox[{"SymbolName", "/@", "symbolList"}]}], "]"}]}], 
+     RowBox[{
+      RowBox[{"concatedSymbolList", "=", 
+       RowBox[{"bladeSet", "~", "Join", "~", 
+        RowBox[{"Fold", "[", 
+         RowBox[{"DeleteCases", ",", "symbolList", ",", "bladeSet"}], 
+         "]"}]}]}], ",", "\[IndentingNewLine]", "positionOrdering"}], 
      "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
     RowBox[{
-     RowBox[{"Print", "[", "bladeSym", "]"}], ";", "\[IndentingNewLine]", 
-     RowBox[{"Unprotect", "[", "bladeSym", "]"}], ";", "\[IndentingNewLine]", 
-     RowBox[{"ClearAll", "[", "bladeSym", "]"}], ";"}]}], 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Length", "[", "bladeSet", "]"}], "===", "1"}], ",", 
+       RowBox[{"Return", "[", "1", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"positionOrdering", "=", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Position", "[", 
+          RowBox[{"symbolList", ",", "#"}], "]"}], "&"}], "/@", 
+        "concatedSymbolList"}], "//", "Flatten"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Signature", "[", "positionOrdering", "]"}]}]}], 
    "\[IndentingNewLine]", "]"}]}]}], "Input",
- CellChangeTimes->{{3.6488998701378202`*^9, 3.6488999409158974`*^9}, {
-  3.6489000701068153`*^9, 3.648900075503355*^9}}],
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQAWIQva7Ya+Ye/deOqkZis0F0wBFBhb1A2ld/qgaIbpKo
+1gPRK+xbjEH0pe1rLEF0xu/1diC6rWGxF4hetzHYB0SnLGWMBtG3kndmgmjn
+r/+WgfmiTetAdJe382YQvezMs70g+p/XvKMg2i910TkQPcFu5Q0Q/Tp+w00Q
+/dfs0lcQHe1Y/g1EOzz7wLoPSKsUcXKDaJaYTAEQfedLtAiI1ghklALRUe9F
+wHSRs4MViL4S/MEaRF+ri+4F0QsUZvaD9SUsvQimX9pcAtHPfIpUDwBpE80F
+YFprm9TpJ0C6o+APmPaSSVF/CqRd446CaQD3O6Ld
+  "]],
 
 Cell[BoxData[{
+ RowBox[{"ClearAll", "[", "orderBladeSet", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"orderBladeSet", "[", 
+   RowBox[{"bladeSet_List", ",", "symbolList_List"}], "]"}], ":=", 
+  RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", "\[IndentingNewLine]", 
+     RowBox[{"sig", ",", "temp", ",", "tempList"}], "\[IndentingNewLine]", 
+     "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"bladeSignature", "[", 
+         RowBox[{"bladeSet", ",", "symbolList"}], "]"}], "===", "1"}], ",", 
+       RowBox[{"Return", "[", "bladeSet", "]"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"temp", "=", 
+      RowBox[{"bladeSet", "\[LeftDoubleBracket]", 
+       RowBox[{"-", "2"}], "\[RightDoubleBracket]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"tempList", "=", 
+      RowBox[{"ReplacePart", "[", 
+       RowBox[{"bladeSet", ",", 
+        RowBox[{
+         RowBox[{"-", "2"}], "->", 
+         RowBox[{"bladeSet", "\[LeftDoubleBracket]", 
+          RowBox[{"-", "1"}], "\[RightDoubleBracket]"}]}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"tempList", "=", 
+      RowBox[{"ReplacePart", "[", 
+       RowBox[{"tempList", ",", 
+        RowBox[{
+         RowBox[{"-", "1"}], "->", "temp"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", "tempList"}]}], "\[IndentingNewLine]", 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.6489102098492327`*^9, 3.6489103373772326`*^9}, {
+  3.648911132135369*^9, 3.648911211726327*^9}, {3.6489112612522793`*^9, 
+  3.648911271854339*^9}, {3.648911313277481*^9, 3.648911344937647*^9}, {
+  3.6489113860367565`*^9, 3.6489115110202537`*^9}, {3.648912188640009*^9, 
+  3.6489121973768826`*^9}, {3.648912236750819*^9, 3.6489122969298363`*^9}, {
+  3.648912382279371*^9, 3.648912394354578*^9}, {3.6489124357117133`*^9, 
+  3.6489124544445868`*^9}, {3.6489125741375546`*^9, 3.648912577651906*^9}, {
+  3.648912707137853*^9, 3.6489127336755066`*^9}, {3.648913071780314*^9, 
+  3.6489130768578215`*^9}, {3.648913161385274*^9, 3.6489132721053443`*^9}, {
+  3.648913325434677*^9, 3.648913332101343*^9}, {3.6489887702937365`*^9, 
+  3.648988782894737*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Attributes", "[", "e1", "]"}]], "Input",
+ CellChangeTimes->{{3.648992106682725*^9, 3.648992114123725*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output",
+ CellChangeTimes->{3.648992114826725*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["main functions", "Subsection",
+ CellChangeTimes->{{3.6489095610612583`*^9, 3.6489095627754297`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", "DeclareAlgebra", "]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    RowBox[{"DeclareAlgebra", "::", "notsym"}], "=", 
-   "\"\<Argument `1` at position `2` is expected to be a symbol. If using a \
-variable, try clearing it prior to use.\>\""}], ";"}], "\[IndentingNewLine]", 
+   "\"\<Argument `1` is expected to be an unassigned symbol. Try clearing and \
+unprotecting all variables prior to use.\>\""}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"DeclareAlgebra", "[", "symbolList_List", "]"}], ":=", 
+  RowBox[{"DeclareAlgebra", "[", 
+   RowBox[{"algName_String", ",", "symbolList_List"}], "]"}], ":=", 
   RowBox[{"Module", "[", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"{", "\[IndentingNewLine]", 
-     RowBox[{"bladeSets", ",", "bladeList", ",", "n"}], "\[IndentingNewLine]",
-      "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"bladeSets", ",", 
+      RowBox[{"bladeList", "=", 
+       RowBox[{"{", "}"}]}], ",", "bladeSyms", ",", "n"}], 
+     "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
     RowBox[{
      RowBox[{
       RowBox[{
        RowBox[{"If", "[", 
         RowBox[{
-         RowBox[{"Quiet", "[", 
-          RowBox[{
-           RowBox[{"Head", "[", "#", "]"}], "=!=", "Symbol"}], "]"}], ",", 
-         " ", 
+         RowBox[{
+          RowBox[{"Quiet", "[", 
+           RowBox[{
+            RowBox[{"Head", "[", "#", "]"}], "=!=", "Symbol"}], "]"}], "||", 
+          RowBox[{"MemberQ", "[", 
+           RowBox[{
+            RowBox[{"Attributes", "[", "#", "]"}], ",", "Protected"}], 
+           "]"}]}], ",", " ", 
          RowBox[{
           RowBox[{"Message", "[", 
            RowBox[{
             RowBox[{"DeclareAlgebra", "::", "notsym"}], ",", "#", ",", 
             RowBox[{
              RowBox[{"Position", "[", 
-              RowBox[{"symbolList", ",", "#", ",", 
-               RowBox[{"{", "1", "}"}]}], "]"}], "\[LeftDoubleBracket]", "1", 
-             "\[RightDoubleBracket]"}]}], "]"}], ";", 
+              RowBox[{"symbolList", ",", "#"}], "]"}], "\[LeftDoubleBracket]",
+              "1", "\[RightDoubleBracket]"}]}], "]"}], ";", 
           RowBox[{"Return", "[", 
            RowBox[{"$Failed", ",", " ", "Module"}], "]"}]}]}], "]"}], "&"}], "/@",
        "symbolList"}], ";", "\[IndentingNewLine]", 
      RowBox[{"bladeSets", "=", 
       RowBox[{
        RowBox[{
-        RowBox[{"Subsets", "[", "symbolList", "]"}], "//", "Rest"}], "//", 
+        RowBox[{
+         RowBox[{"orderBladeSet", "[", 
+          RowBox[{"#", ",", "symbolList"}], "]"}], "&"}], "/@", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"Subsets", "[", "symbolList", "]"}], "//", "Rest"}], 
+         ")"}]}], "//", 
        RowBox[{
         RowBox[{"GatherBy", "[", 
          RowBox[{"#", ",", "Length"}], "]"}], "&"}]}]}], ";", 
@@ -161,27 +269,46 @@ variable, try clearing it prior to use.\>\""}], ";"}], "\[IndentingNewLine]",
        RowBox[{"i", "\[LessEqual]", "n"}], ",", 
        RowBox[{"i", "++"}], ",", " ", "\[IndentingNewLine]", 
        RowBox[{
+        RowBox[{"bladeSyms", "=", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"DeclareBasisBlade", "[", 
+            RowBox[{"#", ",", 
+             RowBox[{"i", "/", "n"}]}], "]"}], "&"}], "/@", 
+          RowBox[{
+          "bladeSets", "\[LeftDoubleBracket]", "i", 
+           "\[RightDoubleBracket]"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"AppendTo", "[", 
+         RowBox[{"bladeList", ",", "bladeSyms"}], "]"}], ";", 
+        "\[IndentingNewLine]", 
         RowBox[{
-         RowBox[{"DeclareBasisBlade", "[", 
-          RowBox[{"#", ",", 
-           RowBox[{"i", "/", "n"}]}], "]"}], "&"}], "/@", 
-        RowBox[{
-        "bladeSets", "\[LeftDoubleBracket]", "i", 
-         "\[RightDoubleBracket]"}]}]}], "\[IndentingNewLine]", "]"}], ";", 
-     "\[IndentingNewLine]", 
-     RowBox[{"bladeList", "=", 
+         RowBox[{"BasisBlades", "[", 
+          RowBox[{"algName", ",", "i"}], "]"}], "=", "bladeSyms"}], ";"}]}], 
+      "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Dimension", "[", "algName", "]"}], "=", 
+      RowBox[{"Length", "[", "symbolList", "]"}]}], ";", 
+     "\[IndentingNewLine]", "bladeList"}]}], "\[IndentingNewLine]", 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"DeclareAlgebra", "[", 
+   RowBox[{
+   "algName_String", ",", "baseSym_String", ",", "dimension_Integer"}], "]"}],
+   ":=", 
+  RowBox[{"DeclareAlgebra", "[", 
+   RowBox[{"algName", ",", 
+    RowBox[{"Symbol", "/@", 
+     RowBox[{"(", 
       RowBox[{
        RowBox[{
-        RowBox[{"Symbol", "[", 
-         RowBox[{"StringJoin", "[", 
-          RowBox[{"SymbolName", "/@", "#"}], "]"}], "]"}], "&"}], "/@", 
-       RowBox[{"Flatten", "[", 
-        RowBox[{"bladeSets", ",", 
+        RowBox[{"StringJoin", "[", 
+         RowBox[{"baseSym", ",", "#"}], "]"}], "&"}], "/@", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"ToString", "[", "i", "]"}], ",", 
          RowBox[{"{", 
-          RowBox[{"1", ",", "2"}], "}"}]}], "]"}]}]}], ";", 
-     "\[IndentingNewLine]", "\[IndentingNewLine]", 
-     RowBox[{"Protect", "/@", "symbolList"}], ";", "\[IndentingNewLine]", 
-     "bladeList"}]}], "\[IndentingNewLine]", "]"}]}]}], "Input",
+          RowBox[{"i", ",", "1", ",", "dimension"}], "}"}]}], "]"}]}], 
+      ")"}]}]}], "]"}]}]}], "Input",
  CellChangeTimes->{{3.6453680517000656`*^9, 3.64536820985888*^9}, {
    3.645368279790069*^9, 3.645368305968069*^9}, {3.645368736574069*^9, 
    3.645368806599069*^9}, {3.645368867107069*^9, 3.645368871435069*^9}, {
@@ -203,163 +330,1290 @@ variable, try clearing it prior to use.\>\""}], ";"}], "\[IndentingNewLine]",
    3.6478685918469625`*^9}, {3.6485789416369085`*^9, 3.6485789849132357`*^9}, 
    3.6485790198757315`*^9, {3.648898937107065*^9, 3.648898978019065*^9}, {
    3.648899032240065*^9, 3.648899038431065*^9}, {3.648899070415065*^9, 
-   3.6488991695487685`*^9}, {3.648899417565568*^9, 3.648899437428554*^9}}],
+   3.6488991695487685`*^9}, {3.648899417565568*^9, 3.648899437428554*^9}, {
+   3.648910073258233*^9, 3.648910095117233*^9}, {3.648910198060233*^9, 
+   3.648910200562233*^9}, {3.6489133680959425`*^9, 3.648913404136546*^9}, {
+   3.6489137271488442`*^9, 3.648913758087938*^9}, {3.6489255610487924`*^9, 
+   3.6489256656127925`*^9}, {3.6489256968357925`*^9, 
+   3.6489257020057926`*^9}, {3.648925733617792*^9, 3.6489257966407924`*^9}, {
+   3.6489809625239534`*^9, 3.6489809715710487`*^9}, {3.6489811820558414`*^9, 
+   3.648981275683841*^9}, {3.6489814231603374`*^9, 3.6489814830403247`*^9}, {
+   3.6489817307510934`*^9, 3.6489817956385813`*^9}, {3.648981857143731*^9, 
+   3.6489818825482717`*^9}, {3.648982395637575*^9, 3.6489824010801196`*^9}, {
+   3.6489824715351644`*^9, 3.6489825544474545`*^9}, {3.6489826130733166`*^9, 
+   3.6489826138673964`*^9}, {3.6489887257327366`*^9, 
+   3.6489887358767366`*^9}, {3.648989517133254*^9, 3.648989534176958*^9}, {
+   3.6489895648360233`*^9, 3.6489895665741973`*^9}, {3.648992181746725*^9, 
+   3.648992218292725*^9}, {3.648992262868725*^9, 3.648992335213725*^9}}],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{"DeclareAlgebra", "[", 
-  RowBox[{"{", 
-   RowBox[{"e1", ",", "e2", ",", "e3"}], "}"}], "]"}]], "Input",
- CellChangeTimes->{{3.6488991939102044`*^9, 3.6488992147612896`*^9}}],
+  RowBox[{"\"\<myAlg\>\"", ",", "\"\<e\>\"", ",", "6"}], "]"}]], "Input",
+ CellChangeTimes->{{3.648925667643792*^9, 3.6489256918247924`*^9}, {
+  3.6489258229567924`*^9, 3.6489258237637925`*^9}, {3.6489258557187924`*^9, 
+  3.6489258565087924`*^9}, {3.6489259067917924`*^9, 3.6489259075417924`*^9}, {
+  3.648981802650283*^9, 3.6489818108491025`*^9}}],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{
-   StyleBox["e1",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]], ",", 
-   StyleBox["e2",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]], ",", 
-   StyleBox["e3",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]], ",", 
-   StyleBox[
-    RowBox[{"e1", "\[Wedge]", "e2"}],
-    LineColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[2, 3], 0.5, 0.6]], ",", 
-   StyleBox[
-    RowBox[{"e1", "\[Wedge]", "e3"}],
-    LineColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[2, 3], 0.5, 0.6]], ",", 
-   StyleBox[
-    RowBox[{"e2", "\[Wedge]", "e3"}],
-    LineColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[2, 3], 0.5, 0.6]], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     StyleBox["e1",
+      LineColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 6], 0.5, 0.6]], ",", 
+     StyleBox["e2",
+      LineColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 6], 0.5, 0.6]], ",", 
+     StyleBox["e3",
+      LineColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 6], 0.5, 0.6]], ",", 
+     StyleBox["e4",
+      LineColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 6], 0.5, 0.6]], ",", 
+     StyleBox["e5",
+      LineColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 6], 0.5, 0.6]], ",", 
+     StyleBox["e6",
+      LineColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 6], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 6], 0.5, 0.6]]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e2"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e3", "\[Wedge]", "e1"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e4"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e5", "\[Wedge]", "e1"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e3"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e4", "\[Wedge]", "e2"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e5"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e6", "\[Wedge]", "e2"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e3", "\[Wedge]", "e4"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e5", "\[Wedge]", "e3"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e3", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e4", "\[Wedge]", "e5"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e6", "\[Wedge]", "e4"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e5", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e3"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e4", "\[Wedge]", "e2"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e5"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e6", "\[Wedge]", "e2"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e3", "\[Wedge]", "e4"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e5", "\[Wedge]", "e3"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e3", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e4", "\[Wedge]", "e5"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e6", "\[Wedge]", "e4"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e5", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e4", "\[Wedge]", "e3"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e3", "\[Wedge]", "e5"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e6", "\[Wedge]", "e3"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e5", "\[Wedge]", "e4"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e4", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e6", "\[Wedge]", "e5"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e3", "\[Wedge]", "e4", "\[Wedge]", "e5"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e3", "\[Wedge]", "e6", "\[Wedge]", "e4"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e3", "\[Wedge]", "e5", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e4", "\[Wedge]", "e6", "\[Wedge]", "e5"}],
+      LineColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 2], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 2], 0.5, 0.6]]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e3", "\[Wedge]", "e4"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e5", "\[Wedge]", "e3"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e3", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e4", "\[Wedge]", "e5"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e6", "\[Wedge]", "e4"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e5", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e3", "\[Wedge]", "e5", "\[Wedge]", "e4"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e3", "\[Wedge]", "e4", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e3", "\[Wedge]", "e6", "\[Wedge]", "e5"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e4", "\[Wedge]", "e5", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e3", "\[Wedge]", "e4", "\[Wedge]", "e5"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e3", "\[Wedge]", "e6", "\[Wedge]", "e4"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e3", "\[Wedge]", "e5", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e4", "\[Wedge]", "e6", "\[Wedge]", "e5"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e3", "\[Wedge]", "e4", "\[Wedge]", "e5", "\[Wedge]", "e6"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     StyleBox[
+      RowBox[{
+      "e1", "\[Wedge]", "e2", "\[Wedge]", "e3", "\[Wedge]", "e4", "\[Wedge]", 
+       "e5"}],
+      LineColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[5, 6], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{
+      "e1", "\[Wedge]", "e2", "\[Wedge]", "e3", "\[Wedge]", "e6", "\[Wedge]", 
+       "e4"}],
+      LineColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[5, 6], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{
+      "e1", "\[Wedge]", "e2", "\[Wedge]", "e3", "\[Wedge]", "e5", "\[Wedge]", 
+       "e6"}],
+      LineColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[5, 6], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{
+      "e1", "\[Wedge]", "e2", "\[Wedge]", "e4", "\[Wedge]", "e6", "\[Wedge]", 
+       "e5"}],
+      LineColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[5, 6], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{
+      "e1", "\[Wedge]", "e3", "\[Wedge]", "e4", "\[Wedge]", "e5", "\[Wedge]", 
+       "e6"}],
+      LineColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[5, 6], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{
+      "e2", "\[Wedge]", "e3", "\[Wedge]", "e4", "\[Wedge]", "e6", "\[Wedge]", 
+       "e5"}],
+      LineColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[5, 6], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[5, 6], 0.5, 0.6]]}], "}"}], ",", 
+   RowBox[{"{", 
+    StyleBox[
+     RowBox[{
+     "e1", "\[Wedge]", "e2", "\[Wedge]", "e3", "\[Wedge]", "e4", "\[Wedge]", 
+      "e5", "\[Wedge]", "e6"}],
+     LineColor->Hue[1, 0.5, 0.6],
+     FrontFaceColor->Hue[1, 0.5, 0.6],
+     BackFaceColor->Hue[1, 0.5, 0.6],
+     GraphicsColor->Hue[1, 0.5, 0.6],
+     FontWeight->"Fat",
+     FontColor->Hue[1, 0.5, 0.6]], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.648981380441066*^9, {3.648981465778599*^9, 3.648981494242445*^9}, 
+   3.6489816376907883`*^9, {3.648981812093227*^9, 3.648981827887806*^9}, 
+   3.6489825793769474`*^9, {3.6489894334008813`*^9, 3.648989439637505*^9}, 
+   3.648991950997725*^9, 3.648991994812725*^9, {3.648992084585725*^9, 
+   3.648992088351725*^9}, {3.648992147840725*^9, 3.648992148743725*^9}, 
+   3.648992221033725*^9, 3.648992300140725*^9, 3.6489923380467253`*^9, {
+   3.648992370710725*^9, 3.648992386865725*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Blades", "[", 
+  RowBox[{"\"\<myAlg\>\"", ",", "3"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6489825840034103`*^9, 3.648982599653975*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
    StyleBox[
     RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e3"}],
-    LineColor->Hue[1, 0.5, 0.6],
-    FrontFaceColor->Hue[1, 0.5, 0.6],
-    BackFaceColor->Hue[1, 0.5, 0.6],
-    GraphicsColor->Hue[1, 0.5, 0.6],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
     FontWeight->"Fat",
-    FontColor->Hue[1, 0.5, 0.6]]}], "}"}]], "Output",
- CellChangeTimes->{
-  3.6488992156843815`*^9, 3.6489001001598206`*^9, {3.6489004228720884`*^9, 
-   3.648900453570158*^9}, 3.648900494966297*^9}]
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e1", "\[Wedge]", "e4", "\[Wedge]", "e2"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e5"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e1", "\[Wedge]", "e6", "\[Wedge]", "e2"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e1", "\[Wedge]", "e3", "\[Wedge]", "e4"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e1", "\[Wedge]", "e5", "\[Wedge]", "e3"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e1", "\[Wedge]", "e3", "\[Wedge]", "e6"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e1", "\[Wedge]", "e4", "\[Wedge]", "e5"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e1", "\[Wedge]", "e6", "\[Wedge]", "e4"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e1", "\[Wedge]", "e5", "\[Wedge]", "e6"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e2", "\[Wedge]", "e4", "\[Wedge]", "e3"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e2", "\[Wedge]", "e3", "\[Wedge]", "e5"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e2", "\[Wedge]", "e6", "\[Wedge]", "e3"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e2", "\[Wedge]", "e5", "\[Wedge]", "e4"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e2", "\[Wedge]", "e4", "\[Wedge]", "e6"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e2", "\[Wedge]", "e6", "\[Wedge]", "e5"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e3", "\[Wedge]", "e4", "\[Wedge]", "e5"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e3", "\[Wedge]", "e6", "\[Wedge]", "e4"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e3", "\[Wedge]", "e5", "\[Wedge]", "e6"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]], ",", 
+   StyleBox[
+    RowBox[{"e4", "\[Wedge]", "e6", "\[Wedge]", "e5"}],
+    LineColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 2], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 2], 0.5, 0.6]]}], "}"}]], "Output",
+ CellChangeTimes->{{3.6489825926662765`*^9, 3.6489825999270024`*^9}, 
+   3.6489895745979996`*^9, 3.648992347706725*^9}]
 }, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DeclareAlgebra", "[", 
+  RowBox[{"\"\<myAlg\>\"", ",", 
+   RowBox[{"{", 
+    RowBox[{"e1", ",", "e2", ",", "e3"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6488991939102044`*^9, 3.6488992147612896`*^9}, {
+  3.6489813650145235`*^9, 3.6489813664126635`*^9}, {3.648989447994341*^9, 
+  3.648989451727714*^9}}],
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"ClearAlgebra", "[", "symbolList_List", "]"}], ":=", 
+  StyleBox[
+   RowBox[{"DeclareAlgebra", "::", "notsym"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Argument \[NoBreak]\\!\\(\\*StyleBox[RowBox[{\\\"e1\\\"}], \
+Rule[FontWeight, \\\"Fat\\\"], Hue[Rational[1, 6], 0.5`, 0.6`]]\\)\[NoBreak] \
+is expected to be an unassigned symbol. Try clearing and unprotecting all \
+variables prior to use.\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6489923569477253`*^9}],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{
+  3.6488992156843815`*^9, 3.6489001001598206`*^9, {3.6489004228720884`*^9, 
+   3.648900453570158*^9}, 3.648900494966297*^9, 3.648913408204953*^9, 
+   3.6489137643635654`*^9, 3.648913934353275*^9, 3.6489813670457263`*^9, 
+   3.6489887061317368`*^9, 3.648988742741737*^9, {3.6489894525337944`*^9, 
+   3.648989455818123*^9}, 3.6489923569487247`*^9}]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", "ClearAlgebra", "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ClearAlgebra", "::", "notalg"}], "=", 
+   "\"\<String `1` does not appear to be associated with an existing algebra. \
+No action was taken.\>\""}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ClearAlgebra", "[", "algName_String", "]"}], ":=", 
   RowBox[{"Module", "[", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"{", "\[IndentingNewLine]", 
-     RowBox[{"bladeSets", ",", "bladeList", ",", "n", ",", " ", "bladeSym"}], 
+     RowBox[{
+      RowBox[{"symbolList", "=", 
+       RowBox[{"Blades", "[", 
+        RowBox[{"algName", ",", "1"}], "]"}]}], ",", "\[IndentingNewLine]", 
+      "bladeSets", ",", "bladeList", ",", "n", ",", " ", "bladeSyms"}], 
      "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
     RowBox[{
-     RowBox[{
+     RowBox[{"If", "[", 
       RowBox[{
-       RowBox[{"If", "[", 
+       RowBox[{"FreeQ", "[", 
         RowBox[{
-         RowBox[{"Quiet", "[", 
-          RowBox[{
-           RowBox[{"Head", "[", "#", "]"}], "=!=", "Symbol"}], "]"}], ",", 
-         " ", 
-         RowBox[{
-          RowBox[{"Message", "[", 
-           RowBox[{
-            RowBox[{"DeclareAlgebra", "::", "notsym"}], ",", "#", ",", 
-            RowBox[{
-             RowBox[{"Position", "[", 
-              RowBox[{"symbolList", ",", "#", ",", 
-               RowBox[{"{", "1", "}"}]}], "]"}], "\[LeftDoubleBracket]", "1", 
-             "\[RightDoubleBracket]"}]}], "]"}], ";", 
-          RowBox[{"Return", "[", 
-           RowBox[{"$Failed", ",", " ", "Module"}], "]"}]}]}], "]"}], "&"}], "/@",
-       "symbolList"}], ";", "\[IndentingNewLine]", 
-     RowBox[{"bladeSets", "=", 
-      RowBox[{
-       RowBox[{"Subsets", "[", "symbolList", "]"}], "//", "Rest"}]}], ";", 
-     "\[IndentingNewLine]", 
-     RowBox[{"n", "=", 
-      RowBox[{"Length", "[", "bladeSets", "]"}]}], ";", "\[IndentingNewLine]", 
-     RowBox[{"For", "[", 
-      RowBox[{
-       RowBox[{"i", "=", "1"}], ",", 
-       RowBox[{"i", "\[LessEqual]", "n"}], ",", 
-       RowBox[{"i", "++"}], ",", " ", "\[IndentingNewLine]", 
+         RowBox[{"DownValues", "[", "Dimension", "]"}], ",", "algName"}], 
+        "]"}], ",", " ", 
        RowBox[{
-        RowBox[{"bladeSym", "=", 
-         RowBox[{"Symbol", "[", 
-          RowBox[{"StringJoin", "@@", 
-           RowBox[{"SymbolName", "/@", 
-            RowBox[{
-            "bladeSets", "\[LeftDoubleBracket]", "i", 
-             "\[RightDoubleBracket]"}]}]}], "]"}]}], ";", 
-        "\[IndentingNewLine]", 
-        RowBox[{"Unprotect", "[", 
-         RowBox[{"Evaluate", "[", "bladeSym", "]"}], "]"}], ";", 
-        "\[IndentingNewLine]", 
-        RowBox[{"ClearAll", "[", 
-         RowBox[{"Evaluate", "[", "bladeSym", "]"}], "]"}], ";"}]}], 
-      "\[IndentingNewLine]", "]"}]}]}], "\[IndentingNewLine]", 
-   "]"}]}]], "Input",
+        RowBox[{"Message", "[", 
+         RowBox[{
+          RowBox[{"ClearAlgebra", "::", "notalg"}], ",", 
+          RowBox[{"algName", " ", "//", "FullForm"}]}], "]"}], ";", 
+        RowBox[{"Return", "[", "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"bladeSets", "=", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"orderBladeSet", "[", 
+           RowBox[{"#", ",", "symbolList"}], "]"}], "&"}], "/@", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"Subsets", "[", "symbolList", "]"}], "//", "Rest"}], 
+          ")"}]}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"n", "=", 
+        RowBox[{"Length", "[", "bladeSets", "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ",", 
+         RowBox[{"i", "\[LessEqual]", "n"}], ",", 
+         RowBox[{"i", "++"}], ",", " ", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"bladeSym", "=", 
+           RowBox[{"Symbol", "[", 
+            RowBox[{"StringJoin", "@@", 
+             RowBox[{"SymbolName", "/@", 
+              RowBox[{
+              "bladeSets", "\[LeftDoubleBracket]", "i", 
+               "\[RightDoubleBracket]"}]}]}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"Unprotect", "[", 
+           RowBox[{"Evaluate", "[", "bladeSym", "]"}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"ClearAll", "[", 
+           RowBox[{"Evaluate", "[", "bladeSym", "]"}], "]"}], ";"}]}], 
+        "\[IndentingNewLine]", "]"}], ";"}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{"bladeSyms", "=", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"Blades", "[", 
+          RowBox[{"algName", ",", "#"}], "]"}], "&"}], "/@", 
+        RowBox[{"Table", "[", 
+         RowBox[{"i", ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "1", ",", 
+            RowBox[{"Dimension", "[", "algName", "]"}]}], "}"}]}], "]"}]}], "//",
+        "Flatten"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Unprotect", "/@", "bladeSyms"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"ClearAll", "/@", "bladeSyms"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Unset", "/@", 
+      RowBox[{
+       RowBox[{"Cases", "[", 
+        RowBox[{
+         RowBox[{"DownValues", "[", "Dimension", "]"}], ",", 
+         RowBox[{"_", "?", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"!", 
+             RowBox[{"FreeQ", "[", 
+              RowBox[{"#", ",", "\"\<myAlg\>\""}], "]"}]}], "&"}], ")"}]}]}], 
+        "]"}], "\[LeftDoubleBracket]", 
+       RowBox[{"All", ",", "1"}], "\[RightDoubleBracket]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Unset", "/@", 
+      RowBox[{
+       RowBox[{"Cases", "[", 
+        RowBox[{
+         RowBox[{"DownValues", "[", "BasisBlades", "]"}], ",", 
+         RowBox[{"_", "?", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"!", 
+             RowBox[{"FreeQ", "[", 
+              RowBox[{"#", ",", "algName"}], "]"}]}], "&"}], ")"}]}]}], "]"}],
+        "\[LeftDoubleBracket]", 
+       RowBox[{"All", ",", "1"}], "\[RightDoubleBracket]"}]}], ";"}]}], 
+   "\[IndentingNewLine]", "]"}]}]}], "Input",
  CellChangeTimes->{{3.648810764998078*^9, 3.648810812965683*^9}, {
    3.6488108672034073`*^9, 3.6488109101255264`*^9}, 3.6488992435301657`*^9, {
    3.6488994422720385`*^9, 3.648899445651376*^9}, {3.6488995293317432`*^9, 
@@ -368,15 +1622,27 @@ Cell[BoxData[
    3.648899738126621*^9}, {3.6488997854363513`*^9, 3.6488998003408413`*^9}, {
    3.6489001964584494`*^9, 3.6489002083746405`*^9}, {3.6489002604378467`*^9, 
    3.6489002714359465`*^9}, 3.648900329124715*^9, {3.6489003807598777`*^9, 
-   3.6489004073645377`*^9}, {3.648900438633664*^9, 3.6489004650943103`*^9}}],
+   3.6489004073645377`*^9}, {3.648900438633664*^9, 3.6489004650943103`*^9}, {
+   3.648913820585187*^9, 3.6489138269308214`*^9}, {3.6489138751106386`*^9, 
+   3.648913922409469*^9}, {3.648988653887737*^9, 3.648988676741737*^9}, {
+   3.648989411993741*^9, 3.6489894268122225`*^9}, {3.648989592558796*^9, 
+   3.648989623596899*^9}, {3.6489897847207317`*^9, 3.648989811382732*^9}, {
+   3.6489898643900023`*^9, 3.648989948364399*^9}, {3.648989996653227*^9, 
+   3.6489899999695587`*^9}, {3.6489902906897297`*^9, 3.64899031275073*^9}, {
+   3.64899034871673*^9, 3.64899036134373*^9}, {3.648991078955631*^9, 
+   3.6489912417189054`*^9}, {3.648991488656597*^9, 3.648991494608192*^9}, {
+   3.648991702801009*^9, 3.6489917216268916`*^9}, {3.648991786133725*^9, 
+   3.6489919396397247`*^9}, {3.648991972693725*^9, 3.648991974107725*^9}}],
 
 Cell[BoxData[
- RowBox[{"ClearAlgebra", "[", 
-  RowBox[{"{", 
-   RowBox[{"e1", ",", "e2", ",", "e3"}], "}"}], "]"}]], "Input",
+ RowBox[{"ClearAlgebra", "[", "\"\<myAlg\>\"", "]"}]], "Input",
  CellChangeTimes->{{3.6488996516869774`*^9, 3.6488996690007086`*^9}, {
   3.6488999490527115`*^9, 3.6488999532241287`*^9}, {3.6489002277735806`*^9, 
-  3.648900236025406*^9}}]
+  3.648900236025406*^9}, {3.6489258640827923`*^9, 3.6489258906047926`*^9}, {
+  3.6489259411387925`*^9, 3.6489259425867925`*^9}, {3.648989382962838*^9, 
+  3.648989386460188*^9}, {3.64899032763973*^9, 3.64899033094273*^9}, {
+  3.648991960677725*^9, 3.648991965482725*^9}}]
+}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -535,14 +1801,22 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{"(*", " ", 
    RowBox[{"note", ":", " ", 
-    RowBox[{"ensure", " ", 
-     RowBox[{"{", 
-      RowBox[{"e1", ",", " ", "e3"}], "}"}], " ", "is", " ", "canonicalized", 
-     " ", "as", " ", 
-     RowBox[{"e3", "^", "e1"}]}]}], " ", "*)"}]}]}], "Input",
+    RowBox[{
+     RowBox[{
+      RowBox[{"ensure", " ", 
+       RowBox[{"{", 
+        RowBox[{"e1", ",", " ", "e3"}], "}"}], " ", "is", " ", 
+       "canonicalized", " ", "as", " ", 
+       RowBox[{
+        RowBox[{"e3", "^", "e1"}], ".", "  ", "Double"}], " ", "check", " ", 
+       "why", " ", "vectors", " ", "in", " ", "some", " ", "dimension", " ", 
+       "have", " ", "dimension", " ", "one"}], "..."}], " ", "understand", 
+     " ", "orientation", " ", "signs", " ", "in", " ", "general"}]}], " ", 
+   "*)"}]}]}], "Input",
  CellChangeTimes->{{3.64857964722246*^9, 3.6485797508005905`*^9}, {
   3.6485798791135907`*^9, 3.6485798826815906`*^9}, {3.6485800637805905`*^9, 
-  3.6485800664445906`*^9}, {3.6488267108683977`*^9, 3.648826759608523*^9}}],
+  3.6485800664445906`*^9}, {3.6488267108683977`*^9, 3.648826759608523*^9}, {
+  3.6489139587718325`*^9, 3.648914000845625*^9}}],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -1362,13 +2636,61 @@ elements.\"\>", "MSG"], "\[NonBreakingSpace]",
 }, Open  ]],
 
 Cell[BoxData[""], "Input",
- CellChangeTimes->{{3.648826318682742*^9, 3.6488263189967737`*^9}}]
+ CellChangeTimes->{{3.648826318682742*^9, 3.6488263189967737`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"myMod", "[", "varList_List", "]"}], ":=", 
+  RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", "temp", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"temp", "=", 
+      RowBox[{"varList", "\[LeftDoubleBracket]", 
+       RowBox[{"-", "2"}], "\[RightDoubleBracket]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Print", "[", "temp", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Unevaluated", "[", "varList", "]"}], "=", 
+      RowBox[{"{", 
+       RowBox[{"5", ",", "6", ",", "7"}], "}"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Print", "[", "temp", "]"}]}]}], "\[IndentingNewLine]", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.648912825370675*^9, 3.648912907815919*^9}, {
+  3.648912951366274*^9, 3.6489129592960663`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"myMod", "[", 
+  RowBox[{"{", 
+   RowBox[{"a", ",", "b", ",", "c"}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6489129102081585`*^9, 3.6489129157997174`*^9}, {
+  3.6489130124813843`*^9, 3.6489130158607225`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["b"], "Print",
+ CellChangeTimes->{3.6489129163697743`*^9, 3.648912962091346*^9, 
+  3.6489130163357697`*^9}],
+
+Cell[BoxData["6"], "Print",
+ CellChangeTimes->{3.6489129163697743`*^9, 3.648912962091346*^9, 
+  3.64891301633677*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"myList", "=", 
+  RowBox[{"{", 
+   RowBox[{"a", ",", "b"}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.6489131044095764`*^9, 3.648913128185954*^9}}]
 }, Open  ]]
 },
-WindowSize->{1898, 962},
-WindowMargins->{{Automatic, 0}, {Automatic, 0}},
+WindowSize->{1896, 962},
+WindowMargins->{{Automatic, 2}, {Automatic, 0}},
 ShowSelection->True,
-FrontEndVersion->"10.2 for Microsoft Windows (64-bit) (July 7, 2015)",
+FrontEndVersion->"10.3 for Microsoft Windows (64-bit) (August 13, 2015)",
 StyleDefinitions->"Default_Paco.nb"
 ]
 (* End of Notebook Content *)
@@ -1377,105 +2699,134 @@ StyleDefinitions->"Default_Paco.nb"
 (*CellTagsOutline
 CellTagsIndex->{
  "Info-c3f151a6-149b-40cb-bfa5-422eeb3d5549"->{
-  Cell[45050, 1319, 577, 12, 45, "Print",
+  Cell[87188, 2593, 577, 12, 45, "Print",
    CellTags->"Info-c3f151a6-149b-40cb-bfa5-422eeb3d5549"]},
  "Info-56fdd583-10c1-450f-977c-72d35b7f13e7"->{
-  Cell[45788, 1340, 1112, 20, 86, "Print",
+  Cell[87926, 2614, 1112, 20, 86, "Print",
    CellTags->"Info-56fdd583-10c1-450f-977c-72d35b7f13e7"]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"Info-c3f151a6-149b-40cb-bfa5-422eeb3d5549", 47374, 1378},
- {"Info-56fdd583-10c1-450f-977c-72d35b7f13e7", 47524, 1381}
+ {"Info-c3f151a6-149b-40cb-bfa5-422eeb3d5549", 91074, 2700},
+ {"Info-56fdd583-10c1-450f-977c-72d35b7f13e7", 91224, 2703}
  }
 *)
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
 Cell[579, 22, 147, 2, 82, "Section"],
-Cell[729, 26, 3179, 63, 232, "Input"],
-Cell[3911, 91, 1002, 20, 212, "Input"],
-Cell[4916, 113, 4436, 92, 332, "Input"],
 Cell[CellGroupData[{
-Cell[9377, 209, 197, 4, 31, "Input"],
-Cell[9577, 215, 2530, 88, 32, "Output"]
-}, Open  ]],
-Cell[12122, 306, 2900, 64, 272, "Input"],
-Cell[15025, 372, 299, 6, 31, "Input"]
-}, Open  ]],
+Cell[751, 28, 104, 1, 45, "Subsection"],
+Cell[858, 31, 3541, 69, 272, "Input"],
+Cell[4402, 102, 1638, 38, 212, "Input"],
+Cell[6043, 142, 2214, 47, 232, "Input"],
 Cell[CellGroupData[{
-Cell[15361, 383, 97, 1, 82, "Section"],
-Cell[CellGroupData[{
-Cell[15483, 388, 687, 18, 52, "Input"],
-Cell[16173, 408, 1755, 60, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[17965, 473, 163, 3, 31, "Input"],
-Cell[18131, 478, 1461, 41, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[19629, 524, 806, 20, 52, "Input"],
-Cell[20438, 546, 4861, 163, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[25336, 714, 1379, 33, 112, "Input"],
-Cell[26718, 749, 2453, 86, 32, "Output"]
-}, Open  ]],
-Cell[29186, 838, 211, 2, 92, "Input"],
-Cell[29400, 842, 1225, 34, 72, "Input"],
-Cell[CellGroupData[{
-Cell[30650, 880, 168, 3, 31, "Input"],
-Cell[30821, 885, 506, 15, 32, "Output"]
+Cell[8282, 193, 130, 2, 31, "Input"],
+Cell[8415, 197, 87, 2, 32, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[31376, 906, 93, 1, 82, "Section"],
-Cell[31472, 909, 937, 25, 52, "Input"],
-Cell[32412, 936, 405, 8, 92, "Input"],
-Cell[32820, 946, 2814, 60, 192, "Input"],
+Cell[8551, 205, 106, 1, 45, "Subsection"],
+Cell[8660, 208, 6602, 138, 372, "Input"],
 Cell[CellGroupData[{
-Cell[35659, 1010, 313, 5, 31, "Input"],
-Cell[35975, 1017, 87, 1, 32, "Output"]
+Cell[15287, 350, 395, 6, 31, "Input"],
+Cell[15685, 358, 26105, 843, 99, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[36099, 1023, 119, 2, 31, "Input"],
-Cell[36221, 1027, 702, 26, 32, "Output"]
-}, Open  ]],
-Cell[36938, 1056, 110, 1, 31, "Input"],
-Cell[CellGroupData[{
-Cell[37073, 1061, 293, 6, 52, "Input"],
-Cell[37369, 1069, 826, 28, 32, "Output"],
-Cell[38198, 1099, 831, 28, 32, "Output"],
-Cell[39032, 1129, 517, 16, 31, "Output"]
+Cell[41827, 1206, 162, 3, 31, "Input"],
+Cell[41992, 1211, 7713, 264, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[39586, 1150, 327, 7, 31, "Input"],
-Cell[39916, 1159, 207, 5, 32, "Output"]
+Cell[49742, 1480, 336, 7, 31, "Input"],
+Cell[50081, 1489, 440, 9, 23, "Message"],
+Cell[50524, 1500, 401, 6, 32, "Output"]
+}, Open  ]],
+Cell[50940, 1509, 5639, 125, 432, "Input"],
+Cell[56582, 1636, 496, 7, 31, "Input"]
+}, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[40160, 1169, 319, 9, 31, "Input"],
-Cell[40482, 1180, 604, 17, 32, "Output"]
+Cell[57127, 1649, 97, 1, 82, "Section"],
+Cell[CellGroupData[{
+Cell[57249, 1654, 687, 18, 52, "Input"],
+Cell[57939, 1674, 1755, 60, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[41123, 1202, 314, 5, 31, "Input"],
-Cell[41440, 1209, 557, 9, 32, "Output"]
+Cell[59731, 1739, 163, 3, 31, "Input"],
+Cell[59897, 1744, 1461, 41, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[42034, 1223, 129, 2, 31, "Input"],
-Cell[42166, 1227, 2722, 83, 32, "Output"]
+Cell[61395, 1790, 1178, 28, 52, "Input"],
+Cell[62576, 1820, 4861, 163, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[44925, 1315, 122, 2, 31, "Input"],
-Cell[45050, 1319, 577, 12, 45, "Print",
+Cell[67474, 1988, 1379, 33, 112, "Input"],
+Cell[68856, 2023, 2453, 86, 32, "Output"]
+}, Open  ]],
+Cell[71324, 2112, 211, 2, 92, "Input"],
+Cell[71538, 2116, 1225, 34, 72, "Input"],
+Cell[CellGroupData[{
+Cell[72788, 2154, 168, 3, 31, "Input"],
+Cell[72959, 2159, 506, 15, 32, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[73514, 2180, 93, 1, 82, "Section"],
+Cell[73610, 2183, 937, 25, 52, "Input"],
+Cell[74550, 2210, 405, 8, 92, "Input"],
+Cell[74958, 2220, 2814, 60, 192, "Input"],
+Cell[CellGroupData[{
+Cell[77797, 2284, 313, 5, 31, "Input"],
+Cell[78113, 2291, 87, 1, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[78237, 2297, 119, 2, 31, "Input"],
+Cell[78359, 2301, 702, 26, 32, "Output"]
+}, Open  ]],
+Cell[79076, 2330, 110, 1, 31, "Input"],
+Cell[CellGroupData[{
+Cell[79211, 2335, 293, 6, 52, "Input"],
+Cell[79507, 2343, 826, 28, 32, "Output"],
+Cell[80336, 2373, 831, 28, 32, "Output"],
+Cell[81170, 2403, 517, 16, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[81724, 2424, 327, 7, 31, "Input"],
+Cell[82054, 2433, 207, 5, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[82298, 2443, 319, 9, 31, "Input"],
+Cell[82620, 2454, 604, 17, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[83261, 2476, 314, 5, 31, "Input"],
+Cell[83578, 2483, 557, 9, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[84172, 2497, 129, 2, 31, "Input"],
+Cell[84304, 2501, 2722, 83, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[87063, 2589, 122, 2, 31, "Input"],
+Cell[87188, 2593, 577, 12, 45, "Print",
  CellTags->"Info-c3f151a6-149b-40cb-bfa5-422eeb3d5549"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[45664, 1336, 121, 2, 31, "Input"],
-Cell[45788, 1340, 1112, 20, 86, "Print",
+Cell[87802, 2610, 121, 2, 31, "Input"],
+Cell[87926, 2614, 1112, 20, 86, "Print",
  CellTags->"Info-56fdd583-10c1-450f-977c-72d35b7f13e7"]
 }, Open  ]],
-Cell[46915, 1363, 94, 1, 31, "Input"]
+Cell[89053, 2637, 94, 1, 31, "Input"],
+Cell[89150, 2640, 832, 19, 152, "Input"],
+Cell[CellGroupData[{
+Cell[90007, 2663, 238, 5, 31, "Input"],
+Cell[CellGroupData[{
+Cell[90270, 2672, 120, 2, 24, "Print"],
+Cell[90393, 2676, 117, 2, 24, "Print"]
+}, Open  ]]
+}, Open  ]],
+Cell[90537, 2682, 169, 4, 31, "Input"]
 }, Open  ]]
 }
 ]
