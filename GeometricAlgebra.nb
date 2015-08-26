@@ -10,16 +10,19 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     85228,       2446]
-NotebookOptionsPosition[     80355,       2285]
-NotebookOutlinePosition[     81155,       2311]
-CellTagsIndexPosition[     80989,       2305]
+NotebookDataLength[     80563,       2219]
+NotebookOptionsPosition[     75921,       2071]
+NotebookOutlinePosition[     76927,       2101]
+CellTagsIndexPosition[     76700,       2094]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+Cell[BoxData["Quit"], "Input",
+ CellChangeTimes->{{3.649594773910514*^9, 3.6495947757108736`*^9}}],
 
 Cell[CellGroupData[{
+
 Cell["Main code", "Section",
  CellChangeTimes->{{3.648811030891263*^9, 3.6488110314052114`*^9}, {
   3.6488993807988915`*^9, 3.648899383703182*^9}}],
@@ -30,11 +33,11 @@ Cell["helper functions", "Subsection",
  CellChangeTimes->{{3.648909549657118*^9, 3.648909553530505*^9}}],
 
 Cell[BoxData[{
- RowBox[{"ClearAll", "[", "DeclareBasisBlade", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ClearAll", "[", "declareBasisBlade", "]"}], "\[IndentingNewLine]", 
  RowBox[{"SetAttributes", "[", 
-  RowBox[{"DeclareBasisBlade", ",", "HoldAll"}], "]"}], "\[IndentingNewLine]", 
+  RowBox[{"declareBasisBlade", ",", "HoldAll"}], "]"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"DeclareBasisBlade", "[", 
+  RowBox[{"declareBasisBlade", "[", 
    RowBox[{"symbolList_List", ",", " ", 
     RowBox[{"colorHue_:", "0.4"}]}], " ", "]"}], ":=", 
   RowBox[{"Module", "[", "\[IndentingNewLine]", 
@@ -100,12 +103,13 @@ Cell[BoxData[{
    3.648981509015922*^9, 3.648981525702591*^9}, {3.64898954600014*^9, 
    3.648989560320572*^9}, {3.6489921304037247`*^9, 3.648992138543725*^9}, {
    3.6491804836252193`*^9, 3.649180491345991*^9}, {3.649180575976454*^9, 
-   3.649180582601116*^9}}],
+   3.649180582601116*^9}, {3.6494428967693467`*^9, 3.6494428975843935`*^9}, {
+   3.64959470610609*^9, 3.6495947124952335`*^9}}],
 
 Cell[BoxData[{
- RowBox[{"ClearAll", "[", "bladeSignature", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"ClearAll", "[", "bladeSetSignature", "]"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"bladeSignature", "[", 
+  RowBox[{"bladeSetSignature", "[", 
    RowBox[{"bladeSet_List", ",", " ", "symbolList_List"}], "]"}], ":=", 
   RowBox[{"Module", "[", "\[IndentingNewLine]", 
    RowBox[{
@@ -134,19 +138,20 @@ Cell[BoxData[{
      RowBox[{"Signature", "[", "positionOrdering", "]"}]}]}], 
    "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"bladeSignature", "[", 
+  RowBox[{"bladeSetSignature", "[", 
    RowBox[{"bladeSet_List", ",", " ", "algebra_String"}], "]"}], ":=", 
-  RowBox[{"bladeSignature", "[", 
+  RowBox[{"bladeSetSignature", "[", 
    RowBox[{"bladeSet", ",", 
-    RowBox[{"BasisBlades", "[", "algebra", "]"}]}], "]"}]}]}], "Input",
+    RowBox[{"BasisBlades", "[", 
+     RowBox[{"algebra", ",", "1"}], "]"}]}], "]"}]}]}], "Input",
  CellChangeTimes->CompressedData["
-1:eJxTTMoPSmViYGAQA2IQva7Ya+Ye/deOqkZis0F0wBFBhb1A2ld/qgaIbpKo
+1:eJxTTMoPSmViYGCQAGIQva7Ya+Ye/deOqkZis0F0wBFBhb1A2ld/qgaIbpKo
 1gPRK+xbjEH0pe1rLEF0xu/1diC6rWGxF4hetzHYB0SnLGWMBtG3kndmgmjn
 r/+WgfmiTetAdJe382YQvezMs70g+p/XvKMg2i910TkQPcFu5Q0Q/Tp+w00Q
 /dfs0lcQHe1Y/g1EOzz7wLoPSKsUcXKDaJaYTAEQfedLtAiI1ghklALRUe9F
 wHSRs4MViL4S/MEaRF+ri+4F0QsUZvaD9SUsvQimX9pcAtHPfIpUDwBpE80F
 YFprm9TpJ0C6o+APmPaSSVF/CqRd446C6TnbWox2GLx2/DDznwWI3iGw0RZE
-dxnL2IFoAG7yssM=
+dxnL2IFopQsbU3cB6RuHN4NpgSd75/EYAs2ZsW0hiAYA5O3DBg==
   "]],
 
 Cell[BoxData[{
@@ -157,52 +162,308 @@ Cell[BoxData[{
   RowBox[{"Module", "[", "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"{", "\[IndentingNewLine]", 
-     RowBox[{"sig", ",", "temp", ",", "tempList"}], "\[IndentingNewLine]", 
-     "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"i", ",", "sig", ",", "pos", ",", "sortList", ",", 
+      RowBox[{"tempList", "=", "bladeSet"}]}], "\[IndentingNewLine]", "}"}], 
+    ",", "\[IndentingNewLine]", 
     RowBox[{
+     RowBox[{"sortList", "=", 
+      RowBox[{"Symbol", "/@", 
+       RowBox[{"Flatten", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Cases", "[", 
+           RowBox[{
+            RowBox[{"SymbolName", "/@", "bladeSet"}], ",", "#"}], "]"}], 
+          "&"}], "/@", 
+         RowBox[{"SymbolName", "/@", "symbolList"}]}], "]"}]}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"sig", "=", "1"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"For", "[", 
+      RowBox[{
+       RowBox[{"i", "=", "1"}], ",", 
+       RowBox[{"i", "\[LessEqual]", 
+        RowBox[{"Length", "[", "tempList", "]"}]}], ",", 
+       RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+           "tempList", "\[LeftDoubleBracket]", "i", "\[RightDoubleBracket]"}],
+            "===", 
+           RowBox[{
+           "sortList", "\[LeftDoubleBracket]", "i", 
+            "\[RightDoubleBracket]"}]}], ",", 
+          RowBox[{"Continue", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"pos", "=", 
+         RowBox[{
+          RowBox[{"Select", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"Position", "[", 
+              RowBox[{"tempList", ",", 
+               RowBox[{
+               "sortList", "\[LeftDoubleBracket]", "i", 
+                "\[RightDoubleBracket]"}]}], "]"}], "\[LeftDoubleBracket]", 
+             RowBox[{"All", ",", "1"}], "\[RightDoubleBracket]"}], ",", 
+            RowBox[{
+             RowBox[{"#", ">", "i"}], "&"}]}], "]"}], "//", "First"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"tempList", "=", 
+         RowBox[{"ReplacePart", "[", 
+          RowBox[{"tempList", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"pos", "\[Rule]", 
+              RowBox[{
+              "tempList", "\[LeftDoubleBracket]", "i", 
+               "\[RightDoubleBracket]"}]}], ",", 
+             RowBox[{"i", "\[Rule]", 
+              RowBox[{
+              "sortList", "\[LeftDoubleBracket]", "i", 
+               "\[RightDoubleBracket]"}]}]}], "}"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"sig", "=", 
+         RowBox[{"-", "sig"}]}]}]}], "\[IndentingNewLine]", "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"tempList", "=", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"Length", "[", "#", "]"}], "~", "Mod", "~", "2"}], "===",
+             "0"}], ",", 
+           RowBox[{"{", "}"}], ",", 
+           RowBox[{
+           "#", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]}], 
+          "]"}], "&"}], "/@", 
+        RowBox[{"Gather", "[", "tempList", "]"}]}], "//", "Flatten"}]}], ";", 
+     "\[IndentingNewLine]", 
      RowBox[{"If", "[", 
       RowBox[{
        RowBox[{
-        RowBox[{"bladeSignature", "[", 
-         RowBox[{"bladeSet", ",", "symbolList"}], "]"}], "===", "1"}], ",", 
-       RowBox[{"Return", "[", "bladeSet", "]"}]}], "]"}], ";", 
-     "\[IndentingNewLine]", 
-     RowBox[{"temp", "=", 
-      RowBox[{"bladeSet", "\[LeftDoubleBracket]", 
-       RowBox[{"-", "2"}], "\[RightDoubleBracket]"}]}], ";", 
-     "\[IndentingNewLine]", 
-     RowBox[{"tempList", "=", 
-      RowBox[{"ReplacePart", "[", 
-       RowBox[{"bladeSet", ",", 
-        RowBox[{
-         RowBox[{"-", "2"}], "->", 
-         RowBox[{"bladeSet", "\[LeftDoubleBracket]", 
-          RowBox[{"-", "1"}], "\[RightDoubleBracket]"}]}]}], "]"}]}], ";", 
-     "\[IndentingNewLine]", 
-     RowBox[{"tempList", "=", 
-      RowBox[{"ReplacePart", "[", 
-       RowBox[{"tempList", ",", 
-        RowBox[{
-         RowBox[{"-", "1"}], "->", "temp"}]}], "]"}]}], ";", 
-     "\[IndentingNewLine]", "tempList"}]}], "\[IndentingNewLine]", 
-   "]"}]}], "\[IndentingNewLine]", 
+        RowBox[{"bladeSetSignature", "[", 
+         RowBox[{"tempList", ",", "symbolList"}], "]"}], "===", 
+        RowBox[{"-", "1"}]}], ",", 
+       RowBox[{
+        RowBox[{"tempList", "=", 
+         RowBox[{"ReplacePart", "[", 
+          RowBox[{"tempList", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "2"}], "\[Rule]", 
+              RowBox[{"tempList", "\[LeftDoubleBracket]", 
+               RowBox[{"-", "1"}], "\[RightDoubleBracket]"}]}], ",", 
+             RowBox[{
+              RowBox[{"-", "1"}], "\[Rule]", 
+              RowBox[{"tempList", "\[LeftDoubleBracket]", 
+               RowBox[{"-", "2"}], "\[RightDoubleBracket]"}]}]}], "}"}]}], 
+          "]"}]}], ";", 
+        RowBox[{"sig", "=", 
+         RowBox[{"-", "sig"}]}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"{", "sig", "}"}], ",", "tempList"}], "]"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"orderBladeSet", "[", 
-   RowBox[{"bladeSet_List", ",", " ", "algebra_String"}], "]"}], ":=", 
+   RowBox[{"first_", ",", " ", "algebra_String"}], "]"}], ":=", 
   RowBox[{"orderBladeSet", "[", 
-   RowBox[{"bladeSet", ",", 
-    RowBox[{"BasisBlades", "[", "algebra", "]"}]}], "]"}]}]}], "Input",
- CellChangeTimes->{{3.6489102098492327`*^9, 3.6489103373772326`*^9}, {
-  3.648911132135369*^9, 3.648911211726327*^9}, {3.6489112612522793`*^9, 
-  3.648911271854339*^9}, {3.648911313277481*^9, 3.648911344937647*^9}, {
-  3.6489113860367565`*^9, 3.6489115110202537`*^9}, {3.648912188640009*^9, 
-  3.6489121973768826`*^9}, {3.648912236750819*^9, 3.6489122969298363`*^9}, {
-  3.648912382279371*^9, 3.648912394354578*^9}, {3.6489124357117133`*^9, 
-  3.6489124544445868`*^9}, {3.6489125741375546`*^9, 3.648912577651906*^9}, {
-  3.648912707137853*^9, 3.6489127336755066`*^9}, {3.648913071780314*^9, 
-  3.6489130768578215`*^9}, {3.648913161385274*^9, 3.6489132721053443`*^9}, {
-  3.648913325434677*^9, 3.648913332101343*^9}, {3.6489887702937365`*^9, 
-  3.648988782894737*^9}, {3.6494218161782913`*^9, 3.6494218385862913`*^9}}]
+   RowBox[{"first", ",", 
+    RowBox[{"BasisBlades", "[", 
+     RowBox[{"algebra", ",", "1"}], "]"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->CompressedData["
+1:eJwlzVtIkwEABeA1U4psxm8UeUtBMm3lpa2W4mwRmpdkhVMjGbp06lBmzVzs
+xW2FGoWIRGlLwjZrrZkyvKTZzBla4QJLxckWLrVyI1emORSk/8yHw/dw4Jww
+gfhiEZVCobDIQAc9ocIY7eSkEXQ5/JN1aw4SbOkvqCe0f+Fg9sYKDLUfXoeM
+bSGbMOgox2uQ1Nk2S8AV2b1iWOanL4E9Pk3lkDUUfB2qfr+vhl256Qp4eaSq
+BtLiP9VBi/DdAyiyMppgemmhFr5t6X4BeW73JEyWqKZgVBbdDjf4Xi44+7N9
+FTLYN//BNGHq2DxpR6vVDBu6vJNexTg5302fOTB488hsH+neHPEcVHbvO9BP
+Wmb1D4Rfz64ehPW95lA4cjoiH9bsKhVAfseHcqjq8xVDmeGC6TXpRFvcKJxc
+mt45QBqwQ0ODVknPcViQyWZAptYmhXqh5QZkqfcY4V2fU2aoqOJ/gbqr4xMw
+WemwQdFzyQJ8KTvjhgNFnevQQVNQ3pAuD3O9oTBwkQZzD/FCoMh2JRHmddrZ
+cDFl7BykZnzMgDpCx4PZ0Vw+VC1EFENKWE7JVr9UDgnNfglcq/ym8PzUMpVb
+u6k1cNolaoABXL0GTjTHPIX9ojvtsILf3gsHbDoTTDLEz0Bj8vgPGCOxOKBS
+0Fo5SDrjHy6Fgmebcng7U1wHLczERqicL/QY5e96DBtr72thXjZlHDKCeB59
+Tp6fgvOrCTOQlj8UbiJ1EdZIaOf5HYPVy76xMG90iQmD3FQWbKgXyOEJ6SUl
+rE9XFwyTpkTMCSD1mroS1q0ZPaY1xTX7xjo5j7i7H8Kp7cIn0BAp9/gffvHJ
+Cw==
+  "]],
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", 
+  RowBox[{"decomposeBlade", ",", "recomposeBlade"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"decomposeBlade", "[", 
+   RowBox[{"sym_Symbol", ",", " ", 
+    RowBox[{"algebra_String:", "$DefaultAlgebra"}]}], "]"}], ":=", 
+  RowBox[{"Symbol", "/@", 
+   RowBox[{"StringCases", "[", 
+    RowBox[{
+     RowBox[{"SymbolName", "[", "sym", "]"}], ",", 
+     RowBox[{"Alternatives", "@@", 
+      RowBox[{"SymbolName", "/@", 
+       RowBox[{"BasisBlades", "[", 
+        RowBox[{"algebra", ",", "1"}], "]"}]}]}]}], 
+    "]"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"recomposeBlade", "[", 
+   RowBox[{"bladeSet_List", ",", " ", 
+    RowBox[{"algebra_String:", "$DefaultAlgebra"}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"obs", "=", 
+      RowBox[{"orderBladeSet", "[", "bladeSet", "]"}]}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"First", "[", "bladeSet", "]"}], 
+     RowBox[{"Symbol", "[", 
+      RowBox[{"StringJoin", "[", 
+       RowBox[{"SymbolName", "/@", 
+        RowBox[{"Rest", "[", "bladeSet", "]"}]}], "]"}], "]"}]}]}], 
+   "\[IndentingNewLine]", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.64959360386409*^9, 3.6495936534850903`*^9}, {
+  3.6495937436880903`*^9, 3.6495939700300903`*^9}, {3.64959409995109*^9, 
+  3.64959411826009*^9}, {3.64959418785209*^9, 3.64959429717309*^9}, {
+  3.649594919824691*^9, 3.649594929578641*^9}, {3.6495949651327505`*^9, 
+  3.649594967239172*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"decomposeBlade", "[", "e1e3", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"orderBladeSet", "[", 
+  RowBox[{"%", ",", "\"\<myAlg\>\""}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"recomposeBlade", "[", "%", "]"}]}], "Input",
+ CellChangeTimes->{{3.6495938000040903`*^9, 3.6495938117950897`*^9}, {
+  3.64959397253509*^9, 3.64959398152309*^9}, {3.64959402096809*^9, 
+  3.64959404105709*^9}, {3.64959414122009*^9, 3.6495941436030903`*^9}, {
+  3.6495941738790903`*^9, 3.64959417606009*^9}, {3.6495943027870903`*^9, 
+  3.64959430471509*^9}, {3.64959442576709*^9, 3.64959442809909*^9}, {
+  3.6496055809257264`*^9, 3.6496055832259564`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   StyleBox["e1",
+    LineColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 3], 0.5, 0.6]], ",", 
+   StyleBox["e3",
+    LineColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 3], 0.5, 0.6]]}], "}"}]], "Output",
+ CellChangeTimes->{{3.64959381287809*^9, 3.64959391301509*^9}, 
+   3.64959398217409*^9, {3.64959402982309*^9, 3.6495940414600897`*^9}, {
+   3.64959412447609*^9, 3.64959414389909*^9}, 3.6495941765510902`*^9, 
+   3.64959424892409*^9, {3.64959429912609*^9, 3.64959430538509*^9}, 
+   3.64959437684809*^9, {3.64959440744109*^9, 3.64959442846309*^9}, {
+   3.6495949314850225`*^9, 3.6495949687424726`*^9}, 3.649595694102658*^9, 
+   3.649604955058449*^9, {3.6496055553751717`*^9, 3.6496055838490186`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"-", "1"}], ",", 
+   StyleBox["e3",
+    LineColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 3], 0.5, 0.6]], ",", 
+   StyleBox["e1",
+    LineColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[1, 3], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[1, 3], 0.5, 0.6]]}], "}"}]], "Output",
+ CellChangeTimes->{{3.64959381287809*^9, 3.64959391301509*^9}, 
+   3.64959398217409*^9, {3.64959402982309*^9, 3.6495940414600897`*^9}, {
+   3.64959412447609*^9, 3.64959414389909*^9}, 3.6495941765510902`*^9, 
+   3.64959424892409*^9, {3.64959429912609*^9, 3.64959430538509*^9}, 
+   3.64959437684809*^9, {3.64959440744109*^9, 3.64959442846309*^9}, {
+   3.6495949314850225`*^9, 3.6495949687424726`*^9}, 3.649595694102658*^9, 
+   3.649604955058449*^9, {3.6496055553751717`*^9, 3.6496055838500185`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"-", 
+  RowBox[{"(", 
+   StyleBox[
+    RowBox[{"e3", "\[Wedge]", "e1"}],
+    LineColor->Hue[
+      Rational[2, 3], 0.5, 0.6],
+    FrontFaceColor->Hue[
+      Rational[2, 3], 0.5, 0.6],
+    BackFaceColor->Hue[
+      Rational[2, 3], 0.5, 0.6],
+    GraphicsColor->Hue[
+      Rational[2, 3], 0.5, 0.6],
+    FontWeight->"Fat",
+    FontColor->Hue[
+      Rational[2, 3], 0.5, 0.6]], ")"}]}]], "Output",
+ CellChangeTimes->{{3.64959381287809*^9, 3.64959391301509*^9}, 
+   3.64959398217409*^9, {3.64959402982309*^9, 3.6495940414600897`*^9}, {
+   3.64959412447609*^9, 3.64959414389909*^9}, 3.6495941765510902`*^9, 
+   3.64959424892409*^9, {3.64959429912609*^9, 3.64959430538509*^9}, 
+   3.64959437684809*^9, {3.64959440744109*^9, 3.64959442846309*^9}, {
+   3.6495949314850225`*^9, 3.6495949687424726`*^9}, 3.649595694102658*^9, 
+   3.649604955058449*^9, {3.6496055553751717`*^9, 3.649605583851019*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "NumericQ"}]], "Input",
+ CellChangeTimes->{{3.6495948561809645`*^9, 3.6495948608168917`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox["\<\"\!\(\*RowBox[{\\\"NumericQ\\\", \\\"[\\\", \
+StyleBox[\\\"expr\\\", \\\"TI\\\"], \\\"]\\\"}]\) gives True if \
+\!\(\*StyleBox[\\\"expr\\\", \\\"TI\\\"]\) is a numeric quantity, and False \
+otherwise. \"\>", "MSG"], "\[NonBreakingSpace]", 
+  ButtonBox[
+   StyleBox["\[RightSkeleton]", "SR"],
+   Active->True,
+   BaseStyle->"Link",
+   ButtonData->"paclet:ref/NumericQ"]}]], "Print", "PrintUsage",
+ CellChangeTimes->{3.649604956732449*^9},
+ CellTags->"Info-33b9036f-3684-4573-8bdf-4940559e8312"]
+}, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -279,8 +540,9 @@ evaluate ClearAlgebra[`1`] prior to use.\>\""}], ";"}], "\[IndentingNewLine]",
       RowBox[{
        RowBox[{
         RowBox[{
-         RowBox[{"orderBladeSet", "[", 
-          RowBox[{"#", ",", "symbolList"}], "]"}], "&"}], "/@", 
+         RowBox[{"Rest", "[", 
+          RowBox[{"orderBladeSet", "[", 
+           RowBox[{"#", ",", "symbolList"}], "]"}], "]"}], "&"}], "/@", 
         RowBox[{"(", 
          RowBox[{
           RowBox[{"Subsets", "[", "symbolList", "]"}], "//", "Rest"}], 
@@ -300,7 +562,7 @@ evaluate ClearAlgebra[`1`] prior to use.\>\""}], ";"}], "\[IndentingNewLine]",
         RowBox[{"bladeSyms", "=", 
          RowBox[{
           RowBox[{
-           RowBox[{"DeclareBasisBlade", "[", 
+           RowBox[{"declareBasisBlade", "[", 
             RowBox[{"#", ",", 
              RowBox[{"i", "/", "n"}]}], "]"}], "&"}], "/@", 
           RowBox[{
@@ -337,8 +599,9 @@ evaluate ClearAlgebra[`1`] prior to use.\>\""}], ";"}], "\[IndentingNewLine]",
          RowBox[{"AssociatedAlgebra", "[", "#", "]"}], "=", "algName"}], 
         ")"}], "&"}], "/@", 
       RowBox[{"BasisBlades", "[", "algName", "]"}]}], ";", 
-     "\[IndentingNewLine]", "bladeList"}]}], "\[IndentingNewLine]", 
-   "]"}]}], "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", 
+     RowBox[{"$DefaultAlgebra", "=", "algName"}], ";", "\[IndentingNewLine]", 
+     "bladeList"}]}], "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"DeclareAlgebra", "[", 
    RowBox[{
@@ -408,7 +671,9 @@ evaluate ClearAlgebra[`1`] prior to use.\>\""}], ";"}], "\[IndentingNewLine]",
    3.6494222509422913`*^9, 3.6494222791922913`*^9}, {3.6494232329565506`*^9, 
    3.649423315377792*^9}, {3.649423751066683*^9, 3.649423923264683*^9}, {
    3.6494239797196827`*^9, 3.6494241088986826`*^9}, {3.6494243892846828`*^9, 
-   3.649424395968683*^9}}],
+   3.649424395968683*^9}, {3.649442984298353*^9, 3.649443020104401*^9}, {
+   3.6495085321314087`*^9, 3.6495085604892445`*^9}, {3.6495947535864496`*^9, 
+   3.6495947538475018`*^9}}],
 
 Cell[BoxData[{
  RowBox[{"ClearAll", "[", "ClearAlgebra", "]"}], "\[IndentingNewLine]", 
@@ -433,14 +698,35 @@ No action was taken.\>\""}], ";"}], "\[IndentingNewLine]",
       RowBox[{
        RowBox[{"FreeQ", "[", 
         RowBox[{
-         RowBox[{"DownValues", "[", "Dimension", "]"}], ",", "algName"}], 
-        "]"}], ",", " ", 
+         RowBox[{"DownValues", "[", "AssociatedAlgebra", "]"}], ",", 
+         "algName"}], "]"}], ",", " ", 
        RowBox[{
         RowBox[{"Message", "[", 
          RowBox[{
           RowBox[{"ClearAlgebra", "::", "notalg"}], ",", 
           RowBox[{"algName", " ", "//", "FullForm"}]}], "]"}], ";", 
         RowBox[{"Return", "[", "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Unset", "/@", 
+      RowBox[{
+       RowBox[{"Cases", "[", 
+        RowBox[{
+         RowBox[{"DownValues", "[", "AssociatedAlgebra", "]"}], ",", 
+         RowBox[{"_", "?", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"!", 
+             RowBox[{"FreeQ", "[", 
+              RowBox[{"#", ",", "algName"}], "]"}]}], "&"}], ")"}]}]}], "]"}],
+        "\[LeftDoubleBracket]", 
+       RowBox[{"All", ",", "1"}], "\[RightDoubleBracket]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"FreeQ", "[", 
+        RowBox[{
+         RowBox[{"DownValues", "[", "Dimension", "]"}], ",", "algName"}], 
+        "]"}], ",", " ", 
+       RowBox[{"Return", "[", "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
      RowBox[{"bladeSyms", "=", 
       RowBox[{
        RowBox[{
@@ -453,25 +739,6 @@ No action was taken.\>\""}], ";"}], "\[IndentingNewLine]",
            RowBox[{"i", ",", "1", ",", 
             RowBox[{"Dimension", "[", "algName", "]"}]}], "}"}]}], "]"}]}], "//",
         "Flatten"}]}], ";", "\[IndentingNewLine]", 
-     RowBox[{"Unset", "/@", 
-      RowBox[{
-       RowBox[{"Cases", "[", 
-        RowBox[{
-         RowBox[{"DownValues", "[", "AssociatedAlgebra", "]"}], ",", 
-         RowBox[{"_", "?", 
-          RowBox[{"(", 
-           RowBox[{
-            RowBox[{"!", 
-             RowBox[{"FreeQ", "[", 
-              RowBox[{"#", ",", 
-               RowBox[{"_", "?", 
-                RowBox[{"(", 
-                 RowBox[{
-                  RowBox[{"MemberQ", "[", 
-                   RowBox[{"bladeSyms", ",", "#"}], "]"}], "&"}], ")"}]}]}], 
-              "]"}]}], "&"}], ")"}]}]}], "]"}], "\[LeftDoubleBracket]", 
-       RowBox[{"All", ",", "1"}], "\[RightDoubleBracket]"}]}], ";", 
-     "\[IndentingNewLine]", 
      RowBox[{"Unprotect", "/@", "bladeSyms"}], ";", "\[IndentingNewLine]", 
      RowBox[{"ClearAll", "/@", "bladeSyms"}], ";", "\[IndentingNewLine]", 
      RowBox[{"Unset", "/@", 
@@ -524,360 +791,31 @@ No action was taken.\>\""}], ";"}], "\[IndentingNewLine]",
    3.649178418405589*^9, 3.6491784200889254`*^9}, {3.6491792055562086`*^9, 
    3.6491792124739003`*^9}, {3.6494223301852913`*^9, 3.649422331359291*^9}, {
    3.649422587771039*^9, 3.649422668114072*^9}, {3.6494242295746827`*^9, 
-   3.6494242333586826`*^9}}],
-
-Cell[CellGroupData[{
+   3.6494242333586826`*^9}, {3.649605028554449*^9, 3.649605030191449*^9}, {
+   3.649605206192449*^9, 3.649605212634449*^9}, {3.6496052802576623`*^9, 
+   3.649605301560793*^9}, {3.6496053957102065`*^9, 3.649605402622898*^9}}],
 
 Cell[BoxData[{
- RowBox[{"AssociatedAlgebra", "[", "e1", "]"}], "\[IndentingNewLine]", 
- RowBox[{"DownValues", "[", "AssociatedAlgebra", "]"}], "\[IndentingNewLine]", 
- RowBox[{"DownValues", "[", "BasisBlades", "]"}], "\[IndentingNewLine]", 
- RowBox[{"DownValues", "[", "Dimension", "]"}]}], "Input",
- CellChangeTimes->{{3.649422680810342*^9, 3.64942271249251*^9}, {
-  3.649422759811241*^9, 3.6494227615354137`*^9}, {3.6494236246086464`*^9, 
-  3.649423661909916*^9}, {3.649424274866683*^9, 3.6494242757806826`*^9}}],
-
-Cell[BoxData["\"\<myAlg3\>\""], "Output",
- CellChangeTimes->{{3.6494226984781084`*^9, 3.649422718976158*^9}, {
-   3.649422756272887*^9, 3.649422768529113*^9}, {3.6494231676790237`*^9, 
-   3.6494231701782737`*^9}, {3.649423387330987*^9, 3.6494233989121447`*^9}, {
-   3.649423473001808*^9, 3.649423498730235*^9}, 3.6494235904680605`*^9, {
-   3.649423633262781*^9, 3.649423662549852*^9}, {3.649424115822683*^9, 
-   3.649424166378683*^9}, {3.649424214187683*^9, 3.6494242764576826`*^9}}],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
+ RowBox[{"ClearAll", "[", "DeclareMultivector", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"SetAttributes", "[", 
+  RowBox[{"DeclareMultivector", ",", "HoldFirst"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"DeclareMultivector", "[", 
+   RowBox[{"sym_Symbol", ",", " ", 
+    RowBox[{"algebra_String:", "$DefaultAlgebra"}]}], "]"}], ":=", 
+  RowBox[{"Module", "[", 
    RowBox[{
-    RowBox[{"HoldPattern", "[", 
-     RowBox[{"AssociatedAlgebra", "[", 
-      StyleBox["e1",
-       LineColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[1, 3], 0.5, 0.6]], "]"}], "]"}], "\[RuleDelayed]", 
-    "\"\<myAlg3\>\""}], ",", 
-   RowBox[{
-    RowBox[{"HoldPattern", "[", 
-     RowBox[{"AssociatedAlgebra", "[", 
-      StyleBox[
-       RowBox[{"e1", "\[Wedge]", "e2"}],
-       LineColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[2, 3], 0.5, 0.6]], "]"}], "]"}], "\[RuleDelayed]", 
-    "\"\<myAlg3\>\""}], ",", 
-   RowBox[{
-    RowBox[{"HoldPattern", "[", 
-     RowBox[{"AssociatedAlgebra", "[", 
-      StyleBox[
-       RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e3"}],
-       LineColor->Hue[1, 0.5, 0.6],
-       FrontFaceColor->Hue[1, 0.5, 0.6],
-       BackFaceColor->Hue[1, 0.5, 0.6],
-       GraphicsColor->Hue[1, 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[1, 0.5, 0.6]], "]"}], "]"}], "\[RuleDelayed]", 
-    "\"\<myAlg3\>\""}], ",", 
-   RowBox[{
-    RowBox[{"HoldPattern", "[", 
-     RowBox[{"AssociatedAlgebra", "[", 
-      StyleBox["e2",
-       LineColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[1, 3], 0.5, 0.6]], "]"}], "]"}], "\[RuleDelayed]", 
-    "\"\<myAlg3\>\""}], ",", 
-   RowBox[{
-    RowBox[{"HoldPattern", "[", 
-     RowBox[{"AssociatedAlgebra", "[", 
-      StyleBox[
-       RowBox[{"e2", "\[Wedge]", "e3"}],
-       LineColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[2, 3], 0.5, 0.6]], "]"}], "]"}], "\[RuleDelayed]", 
-    "\"\<myAlg3\>\""}], ",", 
-   RowBox[{
-    RowBox[{"HoldPattern", "[", 
-     RowBox[{"AssociatedAlgebra", "[", 
-      StyleBox["e3",
-       LineColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[1, 3], 0.5, 0.6]], "]"}], "]"}], "\[RuleDelayed]", 
-    "\"\<myAlg3\>\""}], ",", 
-   RowBox[{
-    RowBox[{"HoldPattern", "[", 
-     RowBox[{"AssociatedAlgebra", "[", 
-      StyleBox[
-       RowBox[{"e3", "\[Wedge]", "e1"}],
-       LineColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[2, 3], 0.5, 0.6]], "]"}], "]"}], "\[RuleDelayed]", 
-    "\"\<myAlg3\>\""}]}], "}"}]], "Output",
- CellChangeTimes->{{3.6494226984781084`*^9, 3.649422718976158*^9}, {
-   3.649422756272887*^9, 3.649422768529113*^9}, {3.6494231676790237`*^9, 
-   3.6494231701782737`*^9}, {3.649423387330987*^9, 3.6494233989121447`*^9}, {
-   3.649423473001808*^9, 3.649423498730235*^9}, 3.6494235904680605`*^9, {
-   3.649423633262781*^9, 3.649423662549852*^9}, {3.649424115822683*^9, 
-   3.649424166378683*^9}, {3.649424214187683*^9, 3.6494242764646826`*^9}}],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-   RowBox[{
-    RowBox[{"HoldPattern", "[", 
-     RowBox[{"BasisBlades", "[", "\"\<myAlg3\>\"", "]"}], "]"}], 
-    "\[RuleDelayed]", 
-    RowBox[{"{", 
+    RowBox[{"{", "}"}], ",", 
+    RowBox[{
+     RowBox[{"ClearAll", "[", "sym", "]"}], ";", 
      RowBox[{
-      StyleBox["e1",
-       LineColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[1, 3], 0.5, 0.6]], ",", 
-      StyleBox["e2",
-       LineColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[1, 3], 0.5, 0.6]], ",", 
-      StyleBox["e3",
-       LineColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[1, 3], 0.5, 0.6]], ",", 
-      StyleBox[
-       RowBox[{"e1", "\[Wedge]", "e2"}],
-       LineColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[2, 3], 0.5, 0.6]], ",", 
-      StyleBox[
-       RowBox[{"e3", "\[Wedge]", "e1"}],
-       LineColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[2, 3], 0.5, 0.6]], ",", 
-      StyleBox[
-       RowBox[{"e2", "\[Wedge]", "e3"}],
-       LineColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[2, 3], 0.5, 0.6]], ",", 
-      StyleBox[
-       RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e3"}],
-       LineColor->Hue[1, 0.5, 0.6],
-       FrontFaceColor->Hue[1, 0.5, 0.6],
-       BackFaceColor->Hue[1, 0.5, 0.6],
-       GraphicsColor->Hue[1, 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[1, 0.5, 0.6]]}], "}"}]}], ",", 
-   RowBox[{
-    RowBox[{"HoldPattern", "[", 
-     RowBox[{"BasisBlades", "[", 
-      RowBox[{"\"\<myAlg3\>\"", ",", "1"}], "]"}], "]"}], "\[RuleDelayed]", 
-    RowBox[{"{", 
-     RowBox[{
-      StyleBox["e1",
-       LineColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[1, 3], 0.5, 0.6]], ",", 
-      StyleBox["e2",
-       LineColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[1, 3], 0.5, 0.6]], ",", 
-      StyleBox["e3",
-       LineColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[1, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[1, 3], 0.5, 0.6]]}], "}"}]}], ",", 
-   RowBox[{
-    RowBox[{"HoldPattern", "[", 
-     RowBox[{"BasisBlades", "[", 
-      RowBox[{"\"\<myAlg3\>\"", ",", "2"}], "]"}], "]"}], "\[RuleDelayed]", 
-    RowBox[{"{", 
-     RowBox[{
-      StyleBox[
-       RowBox[{"e1", "\[Wedge]", "e2"}],
-       LineColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[2, 3], 0.5, 0.6]], ",", 
-      StyleBox[
-       RowBox[{"e3", "\[Wedge]", "e1"}],
-       LineColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[2, 3], 0.5, 0.6]], ",", 
-      StyleBox[
-       RowBox[{"e2", "\[Wedge]", "e3"}],
-       LineColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FrontFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       BackFaceColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       GraphicsColor->Hue[
-         Rational[2, 3], 0.5, 0.6],
-       FontWeight->"Fat",
-       FontColor->Hue[
-         Rational[2, 3], 0.5, 0.6]]}], "}"}]}], ",", 
-   RowBox[{
-    RowBox[{"HoldPattern", "[", 
-     RowBox[{"BasisBlades", "[", 
-      RowBox[{"\"\<myAlg3\>\"", ",", "3"}], "]"}], "]"}], "\[RuleDelayed]", 
-    RowBox[{"{", 
-     StyleBox[
-      RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e3"}],
-      LineColor->Hue[1, 0.5, 0.6],
-      FrontFaceColor->Hue[1, 0.5, 0.6],
-      BackFaceColor->Hue[1, 0.5, 0.6],
-      GraphicsColor->Hue[1, 0.5, 0.6],
-      FontWeight->"Fat",
-      FontColor->Hue[1, 0.5, 0.6]], "}"}]}]}], "}"}]], "Output",
- CellChangeTimes->{{3.6494226984781084`*^9, 3.649422718976158*^9}, {
-   3.649422756272887*^9, 3.649422768529113*^9}, {3.6494231676790237`*^9, 
-   3.6494231701782737`*^9}, {3.649423387330987*^9, 3.6494233989121447`*^9}, {
-   3.649423473001808*^9, 3.649423498730235*^9}, 3.6494235904680605`*^9, {
-   3.649423633262781*^9, 3.649423662549852*^9}, {3.649424115822683*^9, 
-   3.649424166378683*^9}, {3.649424214187683*^9, 3.6494242764696827`*^9}}],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-   RowBox[{"HoldPattern", "[", 
-    RowBox[{"Dimension", "[", "\"\<myAlg3\>\"", "]"}], "]"}], 
-   "\[RuleDelayed]", "3"}], "}"}]], "Output",
- CellChangeTimes->{{3.6494226984781084`*^9, 3.649422718976158*^9}, {
-   3.649422756272887*^9, 3.649422768529113*^9}, {3.6494231676790237`*^9, 
-   3.6494231701782737`*^9}, {3.649423387330987*^9, 3.6494233989121447`*^9}, {
-   3.649423473001808*^9, 3.649423498730235*^9}, 3.6494235904680605`*^9, {
-   3.649423633262781*^9, 3.649423662549852*^9}, {3.649424115822683*^9, 
-   3.649424166378683*^9}, {3.649424214187683*^9, 3.649424276470683*^9}}]
-}, Open  ]]
+      RowBox[{"AssociatedAlgebra", "[", "a", "]"}], "=", "algebra"}], ";"}]}],
+    "]"}]}]}], "Input",
+ CellChangeTimes->{{3.649599681829075*^9, 3.6495998424164796`*^9}, {
+  3.6496036502759895`*^9, 3.6496036530463266`*^9}, {3.649603980044315*^9, 
+  3.649603991616*^9}, {3.6496049114354486`*^9, 3.649604916166449*^9}, {
+  3.649605092423449*^9, 3.649605161003449*^9}}]
 }, Open  ]]
 }, Open  ]],
 
@@ -886,365 +824,238 @@ Cell[CellGroupData[{
 Cell["Dev code", "Section",
  CellChangeTimes->{{3.6488993942702384`*^9, 3.6488993958633976`*^9}}],
 
-Cell[BoxData[
- RowBox[{"ClearAlgebra", "[", "\"\<myAlg3\>\"", "]"}]], "Input",
- CellChangeTimes->{{3.649422297227291*^9, 3.6494223081952915`*^9}, {
-   3.649422751421402*^9, 3.6494227520344634`*^9}, 3.6494241238906827`*^9}],
-
 Cell[CellGroupData[{
 
 Cell[BoxData[
  RowBox[{"DeclareAlgebra", "[", 
-  RowBox[{"\"\<myAlg3\>\"", ",", "\"\<f\>\"", ",", "3"}], "]"}]], "Input",
+  RowBox[{"\"\<myAlg\>\"", ",", "\"\<e\>\"", ",", "3"}], "]"}]], "Input",
  CellChangeTimes->{{3.6491781756674194`*^9, 3.6491781952454195`*^9}, {
   3.649178233893694*^9, 3.6491782351169386`*^9}, {3.649422728448105*^9, 
   3.6494227482140813`*^9}, {3.6494227882590857`*^9, 3.6494227891611757`*^9}, {
   3.6494234087871323`*^9, 3.649423412453499*^9}, {3.6494234941356945`*^9, 
   3.649423495843524*^9}, {3.6494235526788397`*^9, 3.6494235854725604`*^9}, {
   3.649424174960683*^9, 3.649424198249683*^9}, {3.6494242515896826`*^9, 
-  3.649424258951683*^9}, {3.6494243678176827`*^9, 3.649424370201683*^9}}],
+  3.649424258951683*^9}, {3.6494243678176827`*^9, 3.649424370201683*^9}, {
+  3.6494245287013083`*^9, 3.6494245309155297`*^9}, {3.649424633378775*^9, 
+  3.6494246344968867`*^9}, {3.649508203028502*^9, 3.6495082037435737`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     StyleBox["e1",
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox["e2",
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]], ",", 
+     StyleBox["e3",
+      LineColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[1, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[1, 3], 0.5, 0.6]]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     StyleBox[
+      RowBox[{"e1", "\[Wedge]", "e2"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e3", "\[Wedge]", "e1"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]], ",", 
+     StyleBox[
+      RowBox[{"e2", "\[Wedge]", "e3"}],
+      LineColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FrontFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      BackFaceColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      GraphicsColor->Hue[
+        Rational[2, 3], 0.5, 0.6],
+      FontWeight->"Fat",
+      FontColor->Hue[
+        Rational[2, 3], 0.5, 0.6]]}], "}"}], ",", 
+   RowBox[{"{", 
+    StyleBox[
+     RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e3"}],
+     LineColor->Hue[1, 0.5, 0.6],
+     FrontFaceColor->Hue[1, 0.5, 0.6],
+     BackFaceColor->Hue[1, 0.5, 0.6],
+     GraphicsColor->Hue[1, 0.5, 0.6],
+     FontWeight->"Fat",
+     FontColor->Hue[1, 0.5, 0.6]], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.6494244003916826`*^9, {3.6494245319546337`*^9, 3.649424536632101*^9}, 
+   3.649424635054943*^9, 3.649429066042679*^9, 3.6494424253573837`*^9, 
+   3.6494430641999235`*^9, 3.64944495324697*^9, 3.64949881791968*^9, 
+   3.6495082040066*^9, 3.649509123128503*^9, 3.6495865535101748`*^9, 
+   3.649586969283785*^9, {3.64959438494309*^9, 3.6495944004310904`*^9}, 
+   3.649594952200165*^9, {3.649604980278449*^9, 3.649605001383449*^9}, 
+   3.649605051775449*^9, {3.649605188308449*^9, 3.649605197394449*^9}, 
+   3.649605315348171*^9, {3.6496054235619917`*^9, 3.6496054442130566`*^9}, 
+   3.649605570243658*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ClearAlgebra", "[", "\"\<myAlg\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.649422297227291*^9, 3.6494223081952915`*^9}, {
+   3.649422751421402*^9, 3.6494227520344634`*^9}, 3.6494241238906827`*^9, 
+   3.6494245339438324`*^9}],
 
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"DeclareAlgebra", "::", "algex"}], "MessageName"], 
+   RowBox[{"ClearAlgebra", "::", "notalg"}], "MessageName"], 
   RowBox[{
-  ":", " "}], "\<\"Algebra \[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\"myAlg3\\\\\
-\\\"\\\", Rule[ShowSpecialCharacters, False], Rule[ShowStringCharacters, \
-True], Rule[NumberMarks, True]]\\)\[NoBreak] already has associated \
-definitions. Try renaming, or evaluate \
-ClearAlgebra[\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\"myAlg3\\\\\\\"\\\", \
-Rule[ShowSpecialCharacters, False], Rule[ShowStringCharacters, True], \
-Rule[NumberMarks, True]]\\)\[NoBreak]] prior to use.\"\>"}]], "Message", "MSG",
- CellChangeTimes->{{3.649424371066683*^9, 3.6494244003906827`*^9}}],
-
-Cell[BoxData["$Failed"], "Output",
- CellChangeTimes->{3.6494244003916826`*^9}]
+  ":", " "}], "\<\"String \[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\"myAlg\\\\\\\
+\"\\\", Rule[ShowSpecialCharacters, False], Rule[ShowStringCharacters, True], \
+Rule[NumberMarks, True]]\\)\[NoBreak] does not appear to be associated with \
+an existing algebra. No action was taken.\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.6496054715287876`*^9}]
 }, Open  ]],
 
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"myBladeSet", "=", 
-  RowBox[{"decomposeBasisBlade", "[", 
-   RowBox[{"e2e3e2", ",", "\"\<myAlg\>\""}], "]"}]}]], "Input",
- CellChangeTimes->{{3.649179127384392*^9, 3.64917914906956*^9}, {
-  3.6494214989870176`*^9, 3.649421500918824*^9}, {3.649421596446271*^9, 
-  3.6494216020957055`*^9}}],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-   StyleBox["e2",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]], ",", 
-   StyleBox["e3",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]], ",", 
-   StyleBox["e2",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]]}], "}"}]], "Output",
- CellChangeTimes->{
-  3.6491791497956333`*^9, 3.6491793923728886`*^9, 3.6491795366974106`*^9, {
-   3.649421483735543*^9, 3.649421501449771*^9}, 3.6494215463822775`*^9, 
-   3.6494216242904863`*^9}]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"bladeSignature", "[", 
-  RowBox[{"myBladeSet", ",", "\"\<myAlg\>\""}], "]"}]], "Input",
- CellChangeTimes->{{3.649421641836731*^9, 3.6494216679671183`*^9}}],
-
-Cell[BoxData["0"], "Output",
- CellChangeTimes->{{3.649421654526462*^9, 3.649421668468068*^9}, 
-   3.6494218560512915`*^9, 3.649421918956291*^9}]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"orderBladeSet", " ", "[", 
-  RowBox[{"myBladeSet", ",", "\"\<myAlg\>\""}], "]"}]], "Input",
- CellChangeTimes->{{3.649421522025714*^9, 3.649421542799636*^9}, {
-  3.6494216358043346`*^9, 3.6494216391340017`*^9}, {3.649421846700291*^9, 
-  3.6494218544732914`*^9}}],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-   StyleBox["e2",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]], ",", 
-   StyleBox["e2",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]], ",", 
-   StyleBox["e3",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]]}], "}"}]], "Output",
- CellChangeTimes->{{3.6494215349854174`*^9, 3.6494215476011553`*^9}, {
-   3.649421630877827*^9, 3.649421639609954*^9}, 3.649421858107291*^9}]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"bladeSignature", "[", 
-  RowBox[{
-   RowBox[{"{", 
-    RowBox[{"e2", ",", "e3", ",", "e2"}], "}"}], ",", 
-   RowBox[{"BasisBlades", "[", 
-    RowBox[{"\"\<myAlg\>\"", ",", "1"}], "]"}]}], "]"}]], "Input",
- CellChangeTimes->{{3.6491807841842723`*^9, 3.64918081526438*^9}, {
-  3.6494214445544615`*^9, 3.6494214550584106`*^9}}],
-
-Cell[BoxData["0"], "Output",
- CellChangeTimes->{{3.6491807907259264`*^9, 3.6491808155684104`*^9}, {
-  3.649421448650052*^9, 3.6494214556833487`*^9}}]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"orderBladeSet", "[", 
-  RowBox[{
-   RowBox[{"{", 
-    RowBox[{"e2", ",", "e2", ",", "e3"}], "}"}], ",", 
-   RowBox[{"BasisBlades", "[", 
-    RowBox[{"\"\<myAlg\>\"", ",", "1"}], "]"}]}], "]"}]], "Input",
- CellChangeTimes->{{3.649180664189274*^9, 3.649180745964451*^9}, {
-  3.6491808040712605`*^9, 3.649180806809534*^9}}],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-   StyleBox["e2",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]], ",", 
-   StyleBox["e3",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]], ",", 
-   StyleBox["e2",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]]}], "}"}]], "Output",
- CellChangeTimes->{{3.649180699333788*^9, 3.64918074636349*^9}, 
-   3.6491808095228057`*^9, 3.6491832122608614`*^9}]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"BasisBlades", "[", "\"\<myAlg\>\"", "]"}]], "Input",
- CellChangeTimes->{{3.64917924427308*^9, 3.6491792510317554`*^9}}],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-   StyleBox["e1",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]], ",", 
-   StyleBox["e2",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]], ",", 
-   StyleBox["e3",
-    LineColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[1, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[1, 3], 0.5, 0.6]], ",", 
-   StyleBox[
-    RowBox[{"e1", "\[Wedge]", "e2"}],
-    LineColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[2, 3], 0.5, 0.6]], ",", 
-   StyleBox[
-    RowBox[{"e3", "\[Wedge]", "e1"}],
-    LineColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[2, 3], 0.5, 0.6]], ",", 
-   StyleBox[
-    RowBox[{"e2", "\[Wedge]", "e3"}],
-    LineColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    FrontFaceColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    BackFaceColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    GraphicsColor->Hue[
-      Rational[2, 3], 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[
-      Rational[2, 3], 0.5, 0.6]], ",", 
-   StyleBox[
-    RowBox[{"e1", "\[Wedge]", "e2", "\[Wedge]", "e3"}],
-    LineColor->Hue[1, 0.5, 0.6],
-    FrontFaceColor->Hue[1, 0.5, 0.6],
-    BackFaceColor->Hue[1, 0.5, 0.6],
-    GraphicsColor->Hue[1, 0.5, 0.6],
-    FontWeight->"Fat",
-    FontColor->Hue[1, 0.5, 0.6]]}], "}"}]], "Output",
- CellChangeTimes->{3.6491792516068134`*^9, 3.6491793869663477`*^9}]
-}, Open  ]],
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"GeometricProduct", "[", 
+   RowBox[{"blade1_Symbol", ",", " ", "blade2_Symbol", ",", 
+    RowBox[{"algebra_String:", "$DefaultAlgebra"}]}], "]"}], ":=", 
+  RowBox[{"recomposeBlade", "[", 
+   RowBox[{"orderBladeSet", "[", 
+    RowBox[{
+     RowBox[{"Join", "[", 
+      RowBox[{
+       RowBox[{"decomposeBlade", "[", 
+        RowBox[{"blade1", ",", "algebra"}], "]"}], ",", 
+       RowBox[{"decomposeBlade", "[", 
+        RowBox[{"blade2", ",", "algebra"}], "]"}]}], "]"}], ",", "algebra"}], 
+    "]"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"GeometricProduct", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Verbatim", "[", "Plus", "]"}], "[", "args__", "]"}], ",", 
+    "val_"}], "]"}], ":=", 
+  RowBox[{"Plus", "@@", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Wedge", "[", 
+       RowBox[{"#", ",", "val"}], "]"}], "&"}], "/@", 
+     RowBox[{"{", "args", "}"}]}], ")"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"GeometricProduct", "[", 
+   RowBox[{"val_", ",", 
+    RowBox[{
+     RowBox[{"Verbatim", "[", "Plus", "]"}], "[", "args__", "]"}]}], "]"}], ":=", 
+  RowBox[{"Plus", "@@", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Wedge", "[", 
+       RowBox[{"val", ",", "#"}], "]"}], "&"}], "/@", 
+     RowBox[{"{", "args", "}"}]}], ")"}]}]}]}], "Input",
+ CellChangeTimes->CompressedData["
+1:eJwlzlsoQ3EcB/DTyWwjE+k05LawXMpleREPw8NKOqWkXF4UibA1tXiSeyFz
+DQuhJEpiD8ddcntAaGhzN9k6o0we3B6c79/Dr0+/ft9+fSNKanJLaYqiwoSB
+FUwh+5joUrfOmYi3kzF58Jyz50OJgyqHDZb4Clhjs1TDIfGXDnbXFXfB08wV
+I5wWH9+Qu27oDi4c0M9wZnbUCdXp1y9wytHxCvl5M2UXVJ13BkFHYvOuJMml
+dlqq9uAio3iAy0UGontswAkn3l6IIQFlHlLB+qMcEaxdl/qSXVnsB9l9EwMr
+A1Pl0FgWGg63G/VxUJlscHkLZvXwxDTrgBt+sE3vkCtoV/gI7m4cKmHvb0oj
+jORH2mDrNzMLB3P7iUX6rB1Y/9l3BsP7O2/hQYH8CcZW3vNQsbn6+v+HlsnQ
+x+rpB7ODWbmM5LTEE9XVEnTbozh4YdasQZvXzxZcaxm/hHyJ1vqfG6Z90TNG
+I4LRGRJ/yCW0MPAPUBXobA==
+  "]],
 
 Cell[BoxData[
  RowBox[{
-  RowBox[{"decomposeBasisBlade", "[", 
-   RowBox[{"sym_Symbol", ",", " ", "algebra_String"}], "]"}], ":=", 
-  RowBox[{"Module", "[", "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
-    RowBox[{"Symbol", "/@", 
-     RowBox[{"StringCases", "[", 
-      RowBox[{
-       RowBox[{"SymbolName", "[", "sym", "]"}], ",", 
-       RowBox[{"SymbolName", "/@", 
-        RowBox[{"Flatten", "[", 
-         RowBox[{"BasisBlades", "[", "algebra", "]"}], "]"}]}]}], "]"}]}]}], 
-   "\[IndentingNewLine]", "]"}]}]], "Input",
- CellChangeTimes->{{3.649177999915419*^9, 3.649178066265419*^9}, {
-  3.649178124611419*^9, 3.649178137312419*^9}, {3.649179055268181*^9, 
-  3.6491791215788116`*^9}, {3.6491795315274105`*^9, 3.6491795332564106`*^9}, {
-  3.649421608729042*^9, 3.649421617211194*^9}}],
+  RowBox[{"GeometricProduct", "[", 
+   RowBox[{"blade1_Symbol", ",", "blade2_Symbol", ",", " ", 
+    RowBox[{"algebra_String:", "$DefaultAlgebra"}]}], "]"}], ":=", 
+  RowBox[{"Wedge", "[", 
+   RowBox[{"blade1", ",", "blade2", ",", "algebra"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.649599203504075*^9, 3.6495992099320745`*^9}, {
+  3.6495992545780745`*^9, 3.6495993037320747`*^9}, {3.649599399277075*^9, 
+  3.649599408697075*^9}}],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
- RowBox[{"StringCases", "[", 
-  RowBox[{"\"\<e2e1e2e3\>\"", ",", 
-   RowBox[{"{", 
-    RowBox[{"\"\<e2\>\"", ",", "\"\<e1\>\"", ",", "\"\<e3\>\""}], "}"}]}], 
-  "]"}]], "Input",
- CellChangeTimes->{{3.649179412170868*^9, 3.649179502997411*^9}}],
+ RowBox[{"GeometricProduct", "[", 
+  RowBox[{"e3", ",", 
+   RowBox[{"(", 
+    RowBox[{"e1", "+", "e2e3"}], ")"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.6495969134140816`*^9, 3.6495969455960817`*^9}, {
+  3.6495970954140816`*^9, 3.6495971814140816`*^9}, {3.649599425480075*^9, 
+  3.649599480710075*^9}, {3.649603700476851*^9, 3.6496037057406907`*^9}}],
 
 Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-  "\"\<e2\>\"", ",", "\"\<e1\>\"", ",", "\"\<e2\>\"", ",", "\"\<e3\>\""}], 
-  "}"}]], "Output",
- CellChangeTimes->{{3.649179462464411*^9, 3.649179503630411*^9}}]
+ RowBox[{"GeometricProduct", "[", 
+  RowBox[{"e3", ",", 
+   RowBox[{"e1", "+", "e2e3"}]}], "]"}]], "Output",
+ CellChangeTimes->{
+  3.6495969461700816`*^9, {3.6495970809340816`*^9, 3.6495971506050816`*^9}, {
+   3.6495971818860817`*^9, 3.649597221995082*^9}, {3.6495972762580814`*^9, 
+   3.649597289179082*^9}, 3.6495975039250813`*^9, 3.6495975802600813`*^9, {
+   3.6495976561090813`*^9, 3.6495976856139297`*^9}, 3.649598916157075*^9, {
+   3.649598954658075*^9, 3.649598985980075*^9}, {3.6495991705170746`*^9, 
+   3.649599181049075*^9}, 3.6495994379430747`*^9, 3.649599481542075*^9, 
+   3.649599532579075*^9, 3.6496037063273387`*^9}]
 }, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"DeclareMultivector", "[", 
+  RowBox[{"a", ",", "\"\<myAlg\>\""}], "]"}]], "Input",
+ CellChangeTimes->{{3.649599810591116*^9, 3.649599816919381*^9}, {
+  3.6496053279424305`*^9, 3.6496053315907955`*^9}, {3.6496054304456797`*^9, 
+  3.6496054341860538`*^9}}],
 
 Cell[CellGroupData[{
 
@@ -1744,32 +1555,7 @@ Cell[BoxData[
     ";"}]}]}]], "Input",
  CellChangeTimes->{{3.6488265201364727`*^9, 3.6488265650439816`*^9}, {
   3.6488267889291816`*^9, 3.648826823306182*^9}, {3.6488290958921814`*^9, 
-  3.6488292465711813`*^9}, {3.6488293195091815`*^9, 3.6488293494991817`*^9}}],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{"e4", " ", "e3"}]], "Input",
- CellChangeTimes->{{3.648826577210765*^9, 3.648826588329653*^9}, {
-  3.648829296301182*^9, 3.6488293018331814`*^9}}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox["e3",
-   LineColor->Hue[
-     Rational[1, 3], 0.5, 0.6],
-   FrontFaceColor->Hue[
-     Rational[1, 3], 0.5, 0.6],
-   BackFaceColor->Hue[
-     Rational[1, 3], 0.5, 0.6],
-   GraphicsColor->Hue[
-     Rational[1, 3], 0.5, 0.6],
-   FontWeight->"Fat",
-   FontColor->Hue[
-     Rational[1, 3], 0.5, 0.6]], "\[Wedge]", "e4"}]], "Output",
- CellChangeTimes->{{3.6488265800924764`*^9, 3.6488265888995953`*^9}, 
-   3.6488292500931816`*^9, 3.6488293021561813`*^9, 3.648829351617182*^9}]
-}, Open  ]]
+  3.6488292465711813`*^9}, {3.6488293195091815`*^9, 3.6488293494991817`*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -2283,10 +2069,10 @@ Cell[BoxData[
  CellChangeTimes->{{3.6489131044095764`*^9, 3.648913128185954*^9}}]
 }, Open  ]]
 },
-WindowSize->{1680, 958},
-WindowMargins->{{111, Automatic}, {Automatic, -1059}},
+WindowSize->{1454, 782},
+WindowMargins->{{136, Automatic}, {Automatic, 0}},
 ShowSelection->True,
-FrontEndVersion->"10.3 for Microsoft Windows (64-bit) (August 20, 2015)",
+FrontEndVersion->"10.3 for Microsoft Windows (64-bit) (August 24, 2015)",
 StyleDefinitions->"Default_Paco.nb"
 ]
 (* End of Notebook Content *)
@@ -2295,158 +2081,145 @@ StyleDefinitions->"Default_Paco.nb"
 (*CellTagsOutline
 CellTagsIndex->{
  "Info-c3f151a6-149b-40cb-bfa5-422eeb3d5549"->{
-  Cell[76821, 2189, 577, 12, 45, "Print",
+  Cell[72387, 1975, 577, 12, 45, "Print",
    CellTags->"Info-c3f151a6-149b-40cb-bfa5-422eeb3d5549"]},
+ "Info-33b9036f-3684-4573-8bdf-4940559e8312"->{
+  Cell[18030, 452, 532, 12, 45, "Print",
+   CellTags->"Info-33b9036f-3684-4573-8bdf-4940559e8312"]},
  "Info-56fdd583-10c1-450f-977c-72d35b7f13e7"->{
-  Cell[77559, 2210, 1112, 20, 86, "Print",
+  Cell[73125, 1996, 1112, 20, 86, "Print",
    CellTags->"Info-56fdd583-10c1-450f-977c-72d35b7f13e7"]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"Info-c3f151a6-149b-40cb-bfa5-422eeb3d5549", 80713, 2296},
- {"Info-56fdd583-10c1-450f-977c-72d35b7f13e7", 80863, 2299}
+ {"Info-c3f151a6-149b-40cb-bfa5-422eeb3d5549", 76275, 2082},
+ {"Info-33b9036f-3684-4573-8bdf-4940559e8312", 76425, 2085},
+ {"Info-56fdd583-10c1-450f-977c-72d35b7f13e7", 76574, 2088}
  }
 *)
 (*NotebookFileOutline
 Notebook[{
+Cell[557, 20, 98, 1, 31, "Input"],
 Cell[CellGroupData[{
-Cell[579, 22, 147, 2, 82, "Section"],
+Cell[680, 25, 147, 2, 82, "Section"],
 Cell[CellGroupData[{
-Cell[751, 28, 104, 1, 45, "Subsection"],
-Cell[858, 31, 3643, 71, 272, "Input"],
-Cell[4504, 104, 1939, 45, 232, "Input"],
-Cell[6446, 151, 2526, 53, 252, "Input"]
+Cell[852, 31, 104, 1, 45, "Subsection"],
+Cell[959, 34, 3744, 72, 272, "Input"],
+Cell[4706, 108, 2013, 46, 232, "Input"],
+Cell[6722, 156, 5574, 138, 372, "Input"],
+Cell[12299, 296, 1538, 38, 132, "Input"],
+Cell[CellGroupData[{
+Cell[13862, 338, 650, 10, 72, "Input"],
+Cell[14515, 350, 1203, 33, 32, "Output"],
+Cell[15721, 385, 1232, 34, 32, "Output"],
+Cell[16956, 421, 913, 22, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[9009, 209, 106, 1, 45, "Subsection"],
-Cell[9118, 212, 9061, 198, 552, "Input"],
-Cell[18182, 412, 5247, 114, 312, "Input"],
-Cell[CellGroupData[{
-Cell[23454, 530, 514, 7, 92, "Input"],
-Cell[23971, 539, 483, 6, 32, "Output"],
-Cell[24457, 547, 4070, 119, 55, "Output"],
-Cell[28530, 668, 6407, 197, 55, "Output"],
-Cell[34940, 867, 620, 11, 32, "Output"]
-}, Open  ]]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[35621, 885, 97, 1, 82, "Section"],
-Cell[35721, 888, 222, 3, 31, "Input"],
-Cell[CellGroupData[{
-Cell[35968, 895, 643, 9, 31, "Input"],
-Cell[36614, 906, 669, 12, 23, "Message"],
-Cell[37286, 920, 78, 1, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[37401, 926, 312, 6, 31, "Input"],
-Cell[37716, 934, 1228, 42, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[38981, 981, 179, 3, 31, "Input"],
-Cell[39163, 986, 144, 2, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[39344, 993, 285, 5, 31, "Input"],
-Cell[39632, 1000, 1173, 40, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[40842, 1045, 348, 8, 31, "Input"],
-Cell[41193, 1055, 149, 2, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[41379, 1062, 344, 8, 31, "Input"],
-Cell[41726, 1072, 1148, 40, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[42911, 1117, 143, 2, 31, "Input"],
-Cell[43057, 1121, 2453, 86, 32, "Output"]
-}, Open  ]],
-Cell[45525, 1210, 834, 18, 92, "Input"],
-Cell[CellGroupData[{
-Cell[46384, 1232, 257, 6, 31, "Input"],
-Cell[46644, 1240, 201, 5, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[46882, 1250, 687, 18, 52, "Input"],
-Cell[47572, 1270, 1755, 60, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[49364, 1335, 163, 3, 31, "Input"],
-Cell[49530, 1340, 1461, 41, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[51028, 1386, 1178, 28, 52, "Input"],
-Cell[52209, 1416, 4861, 163, 32, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[57107, 1584, 1379, 33, 112, "Input"],
-Cell[58489, 1619, 2453, 86, 32, "Output"]
-}, Open  ]],
-Cell[60957, 1708, 211, 2, 92, "Input"],
-Cell[61171, 1712, 1225, 34, 72, "Input"],
-Cell[CellGroupData[{
-Cell[62421, 1750, 168, 3, 31, "Input"],
-Cell[62592, 1755, 506, 15, 32, "Output"]
+Cell[17906, 448, 121, 2, 31, "Input"],
+Cell[18030, 452, 532, 12, 45, "Print",
+ CellTags->"Info-33b9036f-3684-4573-8bdf-4940559e8312"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[63147, 1776, 93, 1, 82, "Section"],
-Cell[63243, 1779, 937, 25, 52, "Input"],
-Cell[64183, 1806, 405, 8, 92, "Input"],
-Cell[64591, 1816, 2814, 60, 192, "Input"],
-Cell[CellGroupData[{
-Cell[67430, 1880, 313, 5, 31, "Input"],
-Cell[67746, 1887, 87, 1, 32, "Output"]
+Cell[18611, 470, 106, 1, 45, "Subsection"],
+Cell[18720, 473, 9336, 202, 572, "Input"],
+Cell[28059, 677, 5510, 118, 332, "Input"],
+Cell[33572, 797, 875, 20, 92, "Input"]
+}, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[67870, 1893, 119, 2, 31, "Input"],
-Cell[67992, 1897, 702, 26, 32, "Output"]
-}, Open  ]],
-Cell[68709, 1926, 110, 1, 31, "Input"],
+Cell[34496, 823, 97, 1, 82, "Section"],
 Cell[CellGroupData[{
-Cell[68844, 1931, 293, 6, 52, "Input"],
-Cell[69140, 1939, 826, 28, 32, "Output"],
-Cell[69969, 1969, 831, 28, 32, "Output"],
-Cell[70803, 1999, 517, 16, 31, "Output"]
+Cell[34618, 828, 794, 11, 31, "Input"],
+Cell[35415, 841, 3271, 100, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[71357, 2020, 327, 7, 31, "Input"],
-Cell[71687, 2029, 207, 5, 32, "Output"]
+Cell[38723, 946, 249, 4, 31, "Input"],
+Cell[38975, 952, 458, 9, 23, "Message"]
+}, Open  ]],
+Cell[39448, 964, 1898, 50, 92, "Input"],
+Cell[41349, 1016, 456, 9, 31, "Input"],
+Cell[CellGroupData[{
+Cell[41830, 1029, 366, 7, 31, "Input"],
+Cell[42199, 1038, 645, 11, 32, "Output"]
+}, Open  ]],
+Cell[42859, 1052, 278, 5, 31, "Input"],
+Cell[CellGroupData[{
+Cell[43162, 1061, 687, 18, 52, "Input"],
+Cell[43852, 1081, 1755, 60, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[71931, 2039, 319, 9, 31, "Input"],
-Cell[72253, 2050, 604, 17, 32, "Output"]
+Cell[45644, 1146, 163, 3, 31, "Input"],
+Cell[45810, 1151, 1461, 41, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[72894, 2072, 314, 5, 31, "Input"],
-Cell[73211, 2079, 557, 9, 32, "Output"]
+Cell[47308, 1197, 1178, 28, 52, "Input"],
+Cell[48489, 1227, 4861, 163, 32, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[73805, 2093, 129, 2, 31, "Input"],
-Cell[73937, 2097, 2722, 83, 32, "Output"]
+Cell[53387, 1395, 1379, 33, 112, "Input"],
+Cell[54769, 1430, 2453, 86, 32, "Output"]
+}, Open  ]],
+Cell[57237, 1519, 211, 2, 92, "Input"],
+Cell[57451, 1523, 1225, 34, 72, "Input"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[76696, 2185, 122, 2, 31, "Input"],
-Cell[76821, 2189, 577, 12, 45, "Print",
+Cell[58713, 1562, 93, 1, 82, "Section"],
+Cell[58809, 1565, 937, 25, 52, "Input"],
+Cell[59749, 1592, 405, 8, 92, "Input"],
+Cell[60157, 1602, 2814, 60, 192, "Input"],
+Cell[CellGroupData[{
+Cell[62996, 1666, 313, 5, 31, "Input"],
+Cell[63312, 1673, 87, 1, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[63436, 1679, 119, 2, 31, "Input"],
+Cell[63558, 1683, 702, 26, 32, "Output"]
+}, Open  ]],
+Cell[64275, 1712, 110, 1, 31, "Input"],
+Cell[CellGroupData[{
+Cell[64410, 1717, 293, 6, 52, "Input"],
+Cell[64706, 1725, 826, 28, 32, "Output"],
+Cell[65535, 1755, 831, 28, 32, "Output"],
+Cell[66369, 1785, 517, 16, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[66923, 1806, 327, 7, 31, "Input"],
+Cell[67253, 1815, 207, 5, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[67497, 1825, 319, 9, 31, "Input"],
+Cell[67819, 1836, 604, 17, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[68460, 1858, 314, 5, 31, "Input"],
+Cell[68777, 1865, 557, 9, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[69371, 1879, 129, 2, 31, "Input"],
+Cell[69503, 1883, 2722, 83, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[72262, 1971, 122, 2, 31, "Input"],
+Cell[72387, 1975, 577, 12, 45, "Print",
  CellTags->"Info-c3f151a6-149b-40cb-bfa5-422eeb3d5549"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[77435, 2206, 121, 2, 31, "Input"],
-Cell[77559, 2210, 1112, 20, 86, "Print",
+Cell[73001, 1992, 121, 2, 31, "Input"],
+Cell[73125, 1996, 1112, 20, 86, "Print",
  CellTags->"Info-56fdd583-10c1-450f-977c-72d35b7f13e7"]
 }, Open  ]],
-Cell[78686, 2233, 94, 1, 31, "Input"],
-Cell[78783, 2236, 832, 19, 152, "Input"],
+Cell[74252, 2019, 94, 1, 31, "Input"],
+Cell[74349, 2022, 832, 19, 152, "Input"],
 Cell[CellGroupData[{
-Cell[79640, 2259, 238, 5, 31, "Input"],
+Cell[75206, 2045, 238, 5, 31, "Input"],
 Cell[CellGroupData[{
-Cell[79903, 2268, 120, 2, 24, "Print"],
-Cell[80026, 2272, 117, 2, 24, "Print"]
+Cell[75469, 2054, 120, 2, 24, "Print"],
+Cell[75592, 2058, 117, 2, 24, "Print"]
 }, Open  ]]
 }, Open  ]],
-Cell[80170, 2278, 169, 4, 31, "Input"]
+Cell[75736, 2064, 169, 4, 31, "Input"]
 }, Open  ]]
 }
 ]
